@@ -1,2 +1,4 @@
 set colored-stats on
 set completion-display-width 0
+set bind-tty-special-chars off 
+

@@ -91,16 +91,6 @@ export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quo
 # ~/.bash_aliases, instead of adding them here directly.
 # See /usr/share/doc/bash-doc/examples in the bash-doc package.
 
-if [ -f ~/.bash_prompt ]; then
-    . ~/.bash_prompt
-fi
-if [ -f ~/.bash_functions ]; then
-    . ~/.bash_functions
-fi
-if [ -f ~/.bash_aliases ]; then
-    . ~/.bash_aliases
-fi
-
 
 # enable programmable completion features (you don't need to enable
 # this, if it's already enabled in /etc/bash.bashrc and /etc/profile
@@ -113,3 +103,22 @@ if ! shopt -oq posix; then
   fi
 fi
 
+# setting editor for readline ctrl+x,e and less etc.
+EDITOR=vim
+
+# add bin  folder to path variable
+export PATH="$PATH:${HOME}/bin/"
+
+if [ -f ~/.bash_prompt ]; then
+    . ~/.bash_prompt
+fi
+if [ -f ~/.bash_functions ]; then
+    . ~/.bash_functions
+fi
+if [ -f ~/.bash_aliases ]; then
+    . ~/.bash_aliases
+fi
+
+if [ -f ~/.bash_custom ]; then
+    . ~/.bash_custom
+fi

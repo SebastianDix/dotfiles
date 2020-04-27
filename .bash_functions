@@ -1,3 +1,0 @@
-todo {
-echo "prdel"
-}
