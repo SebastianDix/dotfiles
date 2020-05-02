@@ -143,3 +143,7 @@ elif [ "$SSH_AUTH_SOCK" ] && [ $agent_run_state = 1 ]; then
 fi
 
 unset env
+export HISTSIZE=10000;
+PROMPT_COMMAND='history -a'
+shopt -s cmdhist
+

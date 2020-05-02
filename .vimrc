@@ -94,19 +94,19 @@ endfun
 hi def link User1 DiffAdd
 hi def link User2 DiffDelete
 set stl=%!STL()
-
 nmap ; :
-
 nmap <F5> <ESC>:w<cr>
-
 nmap <F2> <ESC>:w<CR>:!clear<CR>:!%<CR>
-
 imap <F2> <C-o>:w<CR>:!clear<CR>:!%<CR>
-
 nmap <F12> <ESC>:set paste!<CR>
-
 nmap <F9> :so ~/.vimrc<CR>
-
 nmap <F8> :!git add %<CR>
-
 imap <F9> :so ~/.vimrc<CR>
+set hlsearch
+" Testing autocmd
+fun! SEARCHFAILED()
+	set hlsearch
+	/FAILED
+	let @/ = 'FAILED'
+endfun
+autocmd FileType prd :set foldmethod=marker | :call SEARCHFAILED() 
