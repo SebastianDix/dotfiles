@@ -102,6 +102,7 @@ nmap <F12> <ESC>:set paste!<CR>
 nmap <F9> :so ~/.vimrc<CR>
 nmap <F8> :!git add %<CR>
 imap <F9> :so ~/.vimrc<CR>
+imap <ESC> <C-o>:w<CR><C-c> 
 set hlsearch
 " Testing autocmd
 fun! SEARCHFAILED()
