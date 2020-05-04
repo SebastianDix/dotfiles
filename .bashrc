@@ -14,7 +14,7 @@ HISTCONTROL=ignoreboth
 
 # append to the history file, don't overwrite it
 shopt -s histappend
-shopt -s autocd
+shopt -s autocd 
 shopt -s cdable_vars
 shopt -s direxpand
 # for setting history length see HISTSIZE and HISTFILESIZE in bash(1)
@@ -122,40 +122,69 @@ fi
 if [ -f ~/.bash_custom ]; then
 	. ~/.bash_custom
 fi
+
 if [ -f ~/.dir_colors ]; then
 	. ~/.dir_colors
 fi
 env=~/.ssh/agent.env
 
-agent_load_env () { test -f "$env" && . "$env" >| /dev/null ; }
+# Note: Don't bother checking SSH_AGENT_PID. It's not used
+#       by SSH itself, and it might even be incorrect
+#       (for example, when using agent-forwarding over SSH).
 
-agent_start () {
-	(umask 077; ssh-agent >| "$env")
-	. "$env" >| /dev/null ; }
-
-	agent_load_env
-
-	# agent_run_state: 0=agent running w/ key; 1=agent w/o key; 2= agent not running
-	agent_run_state=$(ssh-add -l >| /dev/null 2>&1; echo $?)
-
-	add_all_priv_keys() {
-		for i in ${HOME}/.ssh/*; do
-			if [[ $(basename ${i}) =~ ^id_.* ]] && [[ ! $(basename ${i}) =~ .*\.pub$ ]]; then
-				ssh-add "${i}"
-			fi
-		done
-	}
-
-	if [ ! "$SSH_AUTH_SOCK" ] || [ $agent_run_state = 2 ]; then
-		agent_start
-		add_all_priv_keys 
-	elif [ "$SSH_AUTH_SOCK" ] && [ $agent_run_state = 1 ]; then
-		add_all_priv_keys	
+agent_is_running() {
+	if [ "$SSH_AUTH_SOCK" ]; then
+		# ssh-add returns:
+		#   0 = agent running, has keys
+		#   1 = agent running, no keys
+		#   2 = agent not running
+		ssh-add -l >/dev/null 2>&1 || [ $? -eq 1 ]
+	else
+		false
 	fi
+}
 
-	unset env
-	export HISTSIZE=10000;
-	PROMPT_COMMAND='history -a'
-	shopt -s cmdhist
-	export HOME=${HOME}
-	export PATH=$PATH:~/bin
+agent_has_keys() {
+	ssh-add -l >/dev/null 2>&1
+}
+
+agent_load_env() {
+	. "$env" >/dev/null
+}
+
+agent_start() {
+	(umask 077; ssh-agent >"$env")
+	. "$env" >/dev/null
+}
+
+#add_all_keys() {
+#  ls ~/.ssh | grep ^id_rsa.*$ | sed "s:^:`echo ~`/.ssh/:" | xargs -n 1 ssh-add
+#}
+
+if ! agent_is_running; then
+	agent_load_env
+fi
+
+add_all_priv_keys() {
+	for i in ${HOME}/.ssh/*; do
+		if [[ $(basename ${i}) =~ ^id_.* ]] && [[ ! $(basename ${i}) =~ .*\.pub$ ]]; then
+			ssh-add "${i}"
+		fi
+	done
+}
+# if your keys are not stored in ~/.ssh/id_rsa.pub or ~/.ssh/id_dsa.pub, you'll need
+# to paste the proper path after ssh-add
+if ! agent_is_running; then
+	agent_start
+	add_all_priv_keys
+elif ! agent_has_keys; then
+add_all_priv_keys
+fi
+echo `ssh-add -l | wc -l` SSH keys registered.
+unset env
+
+export HISTSIZE=10000;
+PROMPT_COMMAND='history -a'
+shopt -s cmdhist
+export HOME=${HOME}
+export PATH=$PATH:~/bin
