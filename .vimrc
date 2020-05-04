@@ -103,18 +103,9 @@ nmap <F9> :so ~/.vimrc<CR>
 nmap <F8> :!git add %<CR>
 imap <F9> :so ~/.vimrc<CR>
 
-map <Left> <Nop>
-map <Up> <Nop>
-map <Right> <Nop>
-map <Down> <Nop>
-inoremap <Left> <Nop>
-inoremap <Right> <Nop>
-inoremap <Down> <Nop>
-inoremap <Up> <Nop>
-imap <BS> <Nop>
-map <BS> <Nop>
-
 imap <C-l> <C-o>x
 imap <Tab> <C-n>
 " autosave
 autocmd TextChanged,TextChangedI <buffer> silent write
+
+
