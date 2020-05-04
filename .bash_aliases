@@ -18,3 +18,5 @@ alias l='ls -CF'
 # some git aliases
 alias gs='git status'
 alias ga='git add .'
+alias powershellfolder='cd /mnt/c/Windows/System32/WindowsPowerShell/v1.0'
+
