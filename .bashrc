@@ -122,11 +122,10 @@ fi
 if [ -f ~/.bash_custom ]; then
 	. ~/.bash_custom
 fi
-# SSH Agent
-# Note: ~/.ssh/environment should not be used, as it
-#       already has a different purpose in SSH.
-# source : https://www.schoonology.com/technology/ssh-agent-windows/
 
+if [ -f ~/.dir_colors ]; then
+	. ~/.dir_colors
+fi
 env=~/.ssh/agent.env
 
 # Note: Don't bother checking SSH_AGENT_PID. It's not used

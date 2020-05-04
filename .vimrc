@@ -19,7 +19,7 @@ runtime! debian.vim
 " Uncomment the next line to make Vim more Vi-compatible
 " NOTE: debian.vim sets 'nocompatible'.  Setting 'compatible' changes numerous
 " options, so any other options should be set AFTER setting 'compatible'.
-"set compatible
+set nocompatible
 
 " Vim5 and later versions support syntax highlighting. Uncommenting the next
 " line enables syntax highlighting by default.
@@ -108,10 +108,7 @@ nmap <Up> :execute 'normal! gg=GG'<CR>
 nmap <Down> :execute 'normal! gg=GG'<CR>
 nmap <Right> :execute 'normal! gg=GG'<CR>
 set hlsearch
-" Testing autocmd
-fun! SEARCHFAILED()
-	set hlsearch
-	/FAILED
-	let @/ = 'FAILED'
-endfun
-autocmd FileType prd :set foldmethod=marker | :call SEARCHFAILED() 
+imap <Tab> <C-n>
+
+" autosave
+autocmd TextChanged,TextChangedI <buffer> silent write
