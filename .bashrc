@@ -122,6 +122,9 @@ fi
 if [ -f ~/.bash_custom ]; then
 	. ~/.bash_custom
 fi
+if [ -f ~/.dir_colors ]; then
+	. ~/.dir_colors
+fi
 env=~/.ssh/agent.env
 
 agent_load_env () { test -f "$env" && . "$env" >| /dev/null ; }
