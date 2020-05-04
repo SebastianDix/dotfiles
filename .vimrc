@@ -89,11 +89,11 @@ func! STL()
 	return stl.bar
 endfun
 
-
-
+set hlsearch
 hi def link User1 DiffAdd
 hi def link User2 DiffDelete
 set stl=%!STL()
+
 nmap ; :
 nmap <F5> <ESC>:w<cr>
 nmap <F2> <ESC>:w<CR>:!clear<CR>:!%<CR>
@@ -102,13 +102,17 @@ nmap <F12> <ESC>:set paste!<CR>
 nmap <F9> :so ~/.vimrc<CR>
 nmap <F8> :!git add %<CR>
 imap <F9> :so ~/.vimrc<CR>
-nmap <Left> :execute 'normal! gg=GG'<CR>
-nmap <Up> :execute 'normal! gg=GG'<CR>
 
-nmap <Down> :execute 'normal! gg=GG'<CR>
-nmap <Right> :execute 'normal! gg=GG'<CR>
-set hlsearch
+map <Left> <Nop>
+map <Up> <Nop>
+map <Right> <Nop>
+map <Down> <Nop>
+
+imap <BS> <Nop>
+map <BS> <Nop>
+
+imap <C-l> <C-o>x
 imap <Tab> <C-n>
-
+imap <ESC> <Nop>
 " autosave
 autocmd TextChanged,TextChangedI <buffer> silent write
