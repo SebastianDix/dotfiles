@@ -68,7 +68,6 @@ highlight clear CursorLine
 
 highlight CursorLineNR ctermfg=red
 set laststatus=2
-set relativenumber
 
 func! STL()
 	let stl = '%f [%{(&fenc==""?&enc:&fenc).((exists("+bomb") && &bomb)?",B":"")}%M%R%H%W] %y [%l/%L,%v] [%p%%]'
@@ -94,18 +93,26 @@ hi def link User1 DiffAdd
 hi def link User2 DiffDelete
 set stl=%!STL()
 
-nmap ; :
-nmap <F5> <ESC>:w<cr>
-nmap <F2> <ESC>:w<CR>:!clear<CR>:!%<CR>
-imap <F2> <C-o>:w<CR>:!clear<CR>:!%<CR>
-nmap <F12> <ESC>:set paste!<CR>
-nmap <F9> :so ~/.vimrc<CR>
-nmap <F8> :!git add %<CR>
-imap <F9> :so ~/.vimrc<CR>
+" custom commands (invoked by typing ':' and your command
+command! Vimrc :e ~/.vimrc
+cnoremap <C-v> vsplit ~/.vimrc<cr>
 
+" snippets
+nnoremap ,bashif :-1read ${HOME}/.vim/snippets/bashif.sh<CR>2f[a
+
+
+nnoremap ; :
+nnoremap <F5> <ESC>:w<cr>
+nnoremap <F2> :!clear && %<cr>
+inoremap <F2> <C-o>:w<CR>:!clear<CR>:!%<CR>
+nnoremap <F12> <ESC>:set paste!<CR>
+nnoremap <F9> :so ~/.vimrc<CR>
+nnoremap <F8> :!git add %<CR>
+inoremap <F9> :so ~/.vimrc<CR>
+nnoremap Q gg=GG<CR>
 imap <C-l> <C-o>x
 imap <Tab> <C-n>
 " autosave
 autocmd TextChanged,TextChangedI <buffer> silent write
-
-
+" autoclear before command
+command! -nargs=1 R :!clear && <args>
