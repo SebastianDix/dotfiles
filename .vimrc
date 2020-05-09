@@ -99,10 +99,22 @@ cnoremap <C-v> vsplit ~/.vimrc<cr>
 
 " snippets
 nnoremap ,bashif :-1read ${HOME}/.vim/snippets/bashif.sh<CR>2f[a
+nnoremap ,colors :-1read ${HOME}/.vim/snippets/colors.sh<CR>2f[a
+nnoremap ,bashreadfile :-1read ${HOME}/.vim/snippets/bashreadfile.sh<CR>2f[a
+nnoremap ,bashiterate :-1read ${HOME}/.vim/snippets/bashiterate.sh<CR>2f[a
+nnoremap ,bashmultiline :-1read ${HOME}/.vim/snippets/bashmultiline.sh<CR>1f[a
+" clevertab
+function! CleverTab()
+   if strpart( getline('.'), 0, col('.')-1 ) =~ '^\s*$'
+      return "\<Tab>"
+   else
+      return "\<C-N>"
+   endif
+endfunction
+inoremap <Tab> <C-R>=CleverTab()<CR>
 
-
+" remaps
 nnoremap ; :
-nnoremap <F5> <ESC>:w<cr>
 nnoremap <F2> :!clear && %<cr>
 inoremap <F2> <C-o>:w<CR>:!clear<CR>:!%<CR>
 nnoremap <F12> <ESC>:set paste!<CR>
@@ -111,8 +123,11 @@ nnoremap <F8> :!git add %<CR>
 inoremap <F9> :so ~/.vimrc<CR>
 nnoremap Q gg=GG<CR>
 imap <C-l> <C-o>x
-imap <Tab> <C-n>
+" display list of buffers and 
+nnoremap <F5> :buffers<CR>:buffer<Space>
+
 " autosave
 autocmd TextChanged,TextChangedI <buffer> silent write
+
 " autoclear before command
 command! -nargs=1 R :!clear && <args>
