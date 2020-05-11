@@ -104,6 +104,11 @@ set stl=%!STL()
 
 " custom commands (invoked by typing ':' and your command
 command! Vimrc :e ~/.vimrc
+
+"comment out lines of code
+command! -range C <line1>,<line2>normal ^i#<esc>  
+command! -range UC <line1>,<line2>normal ^x  
+" vsplit your vimrc
 cnoremap <C-v> vsplit ~/.vimrc<cr>
 
 " snippets
@@ -116,11 +121,11 @@ nnoremap ,bashwhile :-1read ${HOME}/.vim/snippets/bashwhile.sh<CR>2f[a
 
 " clevertab
 function! CleverTab()
-   if strpart( getline('.'), 0, col('.')-1 ) =~ '^\s*$'
-      return "\<Tab>"
-   else
-      return "\<C-N>"
-   endif
+	if strpart( getline('.'), 0, col('.')-1 ) =~ '^\s*$'
+		return "\<Tab>"
+	else
+		return "\<C-N>"
+	endif
 endfunction
 inoremap <Tab> <C-R>=CleverTab()<CR>
 
@@ -132,7 +137,8 @@ nnoremap <F12> <ESC>:set paste!<CR>
 nnoremap <F9> :so ~/.vimrc<CR>
 nnoremap <F8> :!git add %<CR>
 inoremap <F9> :so ~/.vimrc<CR>
-nnoremap Q gg=GG<CR>
+nnoremap Q gg=G<C-o><C-o>
+":let a = getcurpos()[1] \| silent execute "normal! gg=GG" \| execute a <CR>zz
 imap <C-l> <C-o>x
 " display list of buffers and 
 nnoremap <F5> :buffers<CR>:buffer<Space>
