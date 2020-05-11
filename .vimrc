@@ -53,22 +53,30 @@ set incsearch		" Incremental search
 set autowrite		" Automatically save before commands like :next and :make
 set hidden		" Hide buffers when they are abandoned
 set mouse=a		" Enable mouse usage (all modes)
+
+" this is the best colorscheme imo
 colorscheme desert
+
 " Source a global configuration file if available
 if filereadable("/etc/vim/vimrc.local")
 	source /etc/vim/vimrc.local
 endif
+
+" highlight search results ( I guess )
+set hlsearch
+
+" navigation via :25t27 and similar commands is faster than 3j 5k
 set number
 
+" surrounding lines with #{{{ #}}} and typeng 'zm' in normal mode to fold
+set foldmethod=marker
+
+" this serves to highlight cursorline
 highlight LineNr ctermfg=DarkGrey
-
 set cursorline
-
 highlight clear CursorLine
-
 highlight CursorLineNR ctermfg=red
 set laststatus=2
-
 func! STL()
 	let stl = '%f [%{(&fenc==""?&enc:&fenc).((exists("+bomb") && &bomb)?",B":"")}%M%R%H%W] %y [%l/%L,%v] [%p%%]'
 	let barWidth = &columns - 65 " <-- wild guess
@@ -88,7 +96,8 @@ func! STL()
 	return stl.bar
 endfun
 
-set hlsearch
+
+"I don't know what the heck this is
 hi def link User1 DiffAdd
 hi def link User2 DiffDelete
 set stl=%!STL()
@@ -103,6 +112,8 @@ nnoremap ,colors :-1read ${HOME}/.vim/snippets/colors.sh<CR>2f[a
 nnoremap ,bashreadfile :-1read ${HOME}/.vim/snippets/bashreadfile.sh<CR>2f[a
 nnoremap ,bashiterate :-1read ${HOME}/.vim/snippets/bashiterate.sh<CR>2f[a
 nnoremap ,bashmultiline :-1read ${HOME}/.vim/snippets/bashmultiline.sh<CR>1f[a
+nnoremap ,bashwhile :-1read ${HOME}/.vim/snippets/bashwhile.sh<CR>2f[a
+
 " clevertab
 function! CleverTab()
    if strpart( getline('.'), 0, col('.')-1 ) =~ '^\s*$'
