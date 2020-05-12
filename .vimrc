@@ -148,3 +148,6 @@ autocmd TextChanged,TextChangedI <buffer> silent write
 
 " autoclear before command
 command! -nargs=1 R :!clear && <args>
+
+" cool way of displaying shell commands
+:command! -nargs=* -complete=shellcmd RW new | setlocal buftype=nofile bufhidden=hide noswapfile | r !<args>
