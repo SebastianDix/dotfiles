@@ -149,3 +149,6 @@ command! Vimrc :e ~/.vimrc
 "comment out lines of code
 command! -range C <line1>,<line2>normal ^i#<esc>  
 command! -range UC <line1>,<line2>normal ^x  
+
+" cool way of displaying shell commands
+:command! -nargs=* -complete=shellcmd RW new | setlocal buftype=nofile bufhidden=hide noswapfile | r !<args>
