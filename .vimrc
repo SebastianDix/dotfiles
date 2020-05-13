@@ -102,14 +102,6 @@ hi def link User1 DiffAdd
 hi def link User2 DiffDelete
 set stl=%!STL()
 
-" custom commands (invoked by typing ':' and your command
-command! Vimrc :e ~/.vimrc
-
-"comment out lines of code
-command! -range C <line1>,<line2>normal ^i#<esc>  
-command! -range UC <line1>,<line2>normal ^x  
-" vsplit your vimrc
-cnoremap <C-v> vsplit ~/.vimrc<cr>
 
 " snippets
 nnoremap ,bashif :-1read ${HOME}/.vim/snippets/bashif.sh<CR>2f[a
@@ -128,6 +120,9 @@ function! CleverTab()
 	endif
 endfunction
 inoremap <Tab> <C-R>=CleverTab()<CR>
+
+" vsplit your vimrc
+cnoremap <C-v> vsplit ~/.vimrc<cr>
 
 " remaps
 nnoremap ; :
@@ -148,3 +143,9 @@ autocmd TextChanged,TextChangedI <buffer> silent write
 
 " autoclear before command
 command! -nargs=1 R :!clear && <args>
+" custom commands (invoked by typing ':' and your command
+command! Vimrc :e ~/.vimrc
+
+"comment out lines of code
+command! -range C <line1>,<line2>normal ^i#<esc>  
+command! -range UC <line1>,<line2>normal ^x  
