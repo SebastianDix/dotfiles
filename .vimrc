@@ -152,3 +152,34 @@ command! -range UC <line1>,<line2>normal ^x
 
 " cool way of displaying shell commands
 :command! -nargs=* -complete=shellcmd RW new | setlocal buftype=nofile bufhidden=hide noswapfile | r !<args>
+
+"=====[ Highlight matches when jumping to next ]=============
+
+" This rewires n and N to do the highlighing...
+nnoremap <silent> n   n:call HLNext(0.4)<cr>
+nnoremap <silent> N   N:call HLNext(0.4)<cr>
+" OR ELSE just highlight the match in red...
+function! HLNext (blinktime)
+	let [bufnum, lnum, col, off] = getpos('.')
+	let matchlen = strlen(matchstr(strpart(getline('.'),col-1),@/))
+	let target_pat = '\c\%#\%('.@/.'\)'
+	let ring = matchadd('ColorColumn', target_pat, 101)
+	redraw
+	exec 'sleep ' . float2nr(a:blinktime * 1000) . 'm'
+	call matchdelete(ring)
+	redraw
+endfunction
+
+"==========[ English teaching feedback writer"]=========================
+" highlighting the sections
+highlight vocab ctermfg=red
+highlight mistake ctermfg=green
+highlight pron ctermfg=magenta
+highlight gram ctermfg=blue
+highlight homework ctermfg=darkyellow
+autocmd BufRead,BufNewFile *.mcm call MoveMCM() 
+function! MoveMCM ()
+set nohlsearch
+nnoremap <Tab> /*\_s[[:upper:]]<cr>j
+nnoremap <S-Tab> /*\_s[[:upper:]]<cr>NNj
+endfunction
