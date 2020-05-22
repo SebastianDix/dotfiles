@@ -53,7 +53,8 @@ if expand('%') == '' && !&modified && line('$') <= 1 && getline(1) == ''
   let s:wipebuf = bufnr('%')
 endif
 set shortmess=aoO
-badd +0 ~/.vimrc
+badd +155 ~/.vimrc
+badd +1 ~/todo
 argglobal
 silent! argdel *
 $argadd ~/.vimrc
@@ -191,12 +192,13 @@ setlocal nowinfixheight
 setlocal nowinfixwidth
 setlocal wrap
 setlocal wrapmargin=0
-let s:l = 157 - ((29 * winheight(0) + 15) / 30)
+let s:l = 157 - ((23 * winheight(0) + 15) / 30)
 if s:l < 1 | let s:l = 1 | endif
 exe s:l
 normal! zt
 157
-normal! 064|
+normal! 063|
+lcd ~/bin
 tabnext 1
 if exists('s:wipebuf')
   silent exe 'bwipe ' . s:wipebuf
