@@ -273,10 +273,35 @@ function! CheckGitStatusOfCurrentFile()
 	let gitcommandresult = system(gitcommand)[1]
 	if gitcommandresult == "M"  
 		echo "IT IS MODIFIED"
+		return 1
 	else
 		echo "IT IS NOT MODIFIED"
+		return 2
 	endif
 endfunction
-command! GS call CheckGitStatusOfCurrentFile 
-" prd
-" aeflaeijfael
+command! GS call CheckGitStatusOfCurrentFile()
+" autocmd! BufWinLeave,BufLeave call CheckGitStatusOfCurrentFile()
+
+"commit file
+function! CommitFunction()
+	let resolvedFileName=resolve(expand("%:p"))
+	let fileDirectory=fnamemodify(resolvedFileName, ":h")
+	let gitdirchange="git -C " . fileDirectory
+	let gitadd = gitdirchange .  " add " . resolvedFileName
+
+	call inputsave()
+	let message = input('Enter commit message: ')
+	call inputrestore()
+	execute '!'.gitadd 	
+	execute '!'.gitdirchange." commit -m \"".message."\""
+endfunction
+
+command! Commit call CommitFunction()
+" yeah
+function! Demo()
+	let curline = getline('.')
+	call inputsave()
+	let name = input('Enter name: ')
+	call inputrestore()
+	call setline('.', curline . ' ' . name)
+endfunction  
