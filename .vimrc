@@ -269,5 +269,5 @@ set scroll=3
 	let resolvedFileName=resolve(expand("%:p"))
 	let fileDirectory=fnamemodify(resolvedFileName, ":h")
 	let gitcommand = "git -C " . fileDirectory . " status -s " . resolvedFileName
-	echo system(gitcommand)[0]
+	echo system(gitcommand)
 
