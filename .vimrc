@@ -63,7 +63,7 @@ if filereadable("/etc/vim/vimrc.local")
 endif
 
 " highlight search results ( I guess )
-set hlsearch
+set nohlsearch
 
 " navigation via :25t27 and similar commands is faster than 3j 5k
 set number
@@ -71,14 +71,22 @@ set number
 " surrounding lines with #{{{ #}}} and typeng 'zm' in normal mode to fold
 set foldmethod=marker
 
+" Plugins
+call plug#begin('~/.vim/plugged')
+Plug 'tpope/vim-fugitive'
+call plug#end()
+
 " this serves to highlight cursorline
 highlight LineNr ctermfg=DarkGrey
 set cursorline
+set cursorcolumn
 highlight clear CursorLine
+highlight cursorline ctermbg=17
+highlight cursorcolumn ctermbg=17
 highlight CursorLineNR ctermfg=red
 set laststatus=2
 func! STL()
-	let stl = '%f [%{(&fenc==""?&enc:&fenc).((exists("+bomb") && &bomb)?",B":"")}%M%R%H%W] %y [%l/%L,%v] [%p%%]'
+	let stl = '%#DiffChange# %f %#StatusLine# [%{(&fenc==""?&enc:&fenc).((exists("+bomb") && &bomb)?",B":"")}%R%H%W] %y [%p%%]'
 	let barWidth = &columns - 65 " <-- wild guess
 	let barWidth = barWidth < 3 ? 3 : barWidth
 
@@ -89,14 +97,36 @@ func! STL()
 	endif
 
 	let pad = strlen(line('$'))-strlen(line('.')) + 3 - strlen(virtcol('.')) + 3 - strlen(line('.')*100/line('$'))
-	let bar = repeat(' ',pad).' [%1*%'.barWidth.'.'.barWidth.'('
+	let bar = repeat(' ',pad).' [%2*%'.barWidth.'.'.barWidth.'('
 				\.repeat('-',progress )
 				\.'%2*0%1*'
 				\.repeat('-',barWidth - progress - 1).'%0*%)%<]'
+
+
+	" redir => mod
+	" silent set modified?
+	" redir END
+	" if mod =~ "nomodified"
+	" 	let stl = stl . "  WRITTEN  "
+	" else
+	" 	let stl = stl . "           "
+	" endif
+ 
+	let stl = "%#Search#" . $PWD . " %#StatusLine#" . stl
+	let resolvedFileName=resolve(expand("%:p"))
+	let fileDirectory=fnamemodify(resolvedFileName, ":h")
+	let gitcommand = "git -C " . fileDirectory . " status -s " . resolvedFileName
+" let gitcommandresult=system(gitcommand)
+" let stl = stl . gitcommandresult
+
 	return stl.bar
+
 endfun
-
-
+function! GetDir()
+	let resolvedFileName=resolve(expand("%:p"))
+	let fileDirectory=fnamemodify(resolvedFileName, ":h")
+	echo fileDirectory
+endfunction
 "I don't know what the heck this is
 hi def link User1 DiffAdd
 hi def link User2 DiffDelete
@@ -129,6 +159,7 @@ nnoremap ; :
 nnoremap <F2> :!clear && %<cr>
 inoremap <F2> <C-o>:w<CR>:!clear<CR>:!%<CR>
 nnoremap <F12> <ESC>:set paste!<CR>
+inoremap <silent> <F12> <ESC>:set paste!<CR>
 nnoremap <F9> :so ~/.vimrc<CR>
 nnoremap <F8> :!git add %<CR>
 inoremap <F9> :so ~/.vimrc<CR>
@@ -139,19 +170,19 @@ imap <C-l> <C-o>x
 nnoremap <F5> :buffers<CR>:buffer<Space>
 
 " autosave
-autocmd TextChanged,TextChangedI <buffer> silent write
+autocmd! TextChanged,TextChangedI <buffer> silent write
 
-" autoclear before command
+" autoclear before commanad
 command! -nargs=1 R :!clear && <args>
 " custom commands (invoked by typing ':' and your command
-command! Vimrc :e ~/.vimrc
+command! Vimrc :vsplit ~/.vimrc
 
 "comment out lines of code
 command! -range C <line1>,<line2>normal ^i#<esc>  
 command! -range UC <line1>,<line2>normal ^x  
 
 " cool way of displaying shell commands
-:command! -nargs=* -complete=shellcmd RW new | setlocal buftype=nofile bufhidden=hide noswapfile | r !<args>
+command! -nargs=* -complete=shellcmd RW new | setlocal buftype=nofile bufhidden=hide noswapfile | r !<args>
 
 "=====[ Highlight matches when jumping to next ]=============
 
@@ -179,7 +210,64 @@ highlight gram ctermfg=blue
 highlight homework ctermfg=darkyellow
 autocmd BufRead,BufNewFile *.mcm call MoveMCM() 
 function! MoveMCM ()
-set nohlsearch
-nnoremap <Tab> /*\_s[[:upper:]]<cr>j
-nnoremap <S-Tab> /*\_s[[:upper:]]<cr>NNj
+	set nohlsearch
+	nnoremap <buffer> <Tab> /*\_s[[:upper:]]<cr>j
+	nnoremap <buffer> <S-Tab> /*\_s[[:upper:]]<cr>NNj
+	nnoremap <buffer> <C-m> :call SendData()<cr>
 endfunction
+
+function! InsertDate()
+	" :s/Copyright \zs2007\ze All Rights Reserved/2008/
+	execute "normal! :2s/Date: \zs.*\ze/\=strftime('%c')/g <CR>"
+endfunction
+function! GetStudent()
+	execute "normal! 1G9ly$"
+	return @"
+endfunction
+
+function! SendData()
+	" TODO add name to provided data, the date and the time 
+	let file = readfile(expand("%:p")) " read current file
+	let matched = 0
+	let matchedline = ""
+	for line in file
+		let match = matchstr(line, '^\* VOCAB.*') " regex match
+		if(matched == 1)
+			"echo line
+			let matched = 0
+			let matchedline = matchedline."{".line."}"
+		endif 
+		if(!empty(match))
+			let matched = 1
+			let matchedline = matchedline . line
+			" your command with match
+		endif
+	endfor
+	let date = strftime('%c')
+	let matchedline = matchedline . "* Date " . date . GetStudent()
+	echo matchedline
+	call writefile([matchedline], "event.log", "a")
+
+endfunction
+function! s:DiffGitWithSaved()
+	let filename = expand('%')
+	let diffname = tempname()
+	execute 'silent w! '.diffname
+	execute '!git diff --color=always --no-index -- '.shellescape(filename).' '.diffname
+endfunction
+com! DiffGitSaved call s:DiffGitWithSaved()
+nmap <leader>d :DiffGitSaved<CR>
+
+" scrolling with ctrl u and ctrl dl
+set scroll=3
+
+" tell me if the file I am editing in this buffer (no matter the working
+" directory) needs a commit or not  
+" upon leaving this buffer, if it is uncommited, then tell me to commit it
+" first! 
+
+	let resolvedFileName=resolve(expand("%:p"))
+	let fileDirectory=fnamemodify(resolvedFileName, ":h")
+	let gitcommand = "git -C " . fileDirectory . " status -s " . resolvedFileName
+	echo system(gitcommand)[0]
+
