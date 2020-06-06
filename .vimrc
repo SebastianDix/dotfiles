@@ -111,13 +111,13 @@ func! STL()
 	" else
 	" 	let stl = stl . "           "
 	" endif
- 
+
 	let stl = "%#Search#" . $PWD . " %#StatusLine#" . stl
 	let resolvedFileName=resolve(expand("%:p"))
 	let fileDirectory=fnamemodify(resolvedFileName, ":h")
 	let gitcommand = "git -C " . fileDirectory . " status -s " . resolvedFileName
-" let gitcommandresult=system(gitcommand)
-" let stl = stl . gitcommandresult
+	" let gitcommandresult=system(gitcommand)
+	" let stl = stl . gitcommandresult
 
 	return stl.bar
 
@@ -266,7 +266,17 @@ set scroll=3
 " upon leaving this buffer, if it is uncommited, then tell me to commit it
 " first! 
 
+function! CheckGitStatusOfCurrentFile()
 	let resolvedFileName=resolve(expand("%:p"))
 	let fileDirectory=fnamemodify(resolvedFileName, ":h")
 	let gitcommand = "git -C " . fileDirectory . " status -s " . resolvedFileName
-command! GS echo system(gitcommand)
+	let gitcommandresult = system(gitcommand)[1]
+	if gitcommandresult == "M"  
+		echo "IT IS MODIFIED"
+	else
+		echo "IT IS NOT MODIFIED"
+	endif
+endfunction
+command! GS call CheckGitStatusOfCurrentFile 
+" prd
+" aeflaeijfael
