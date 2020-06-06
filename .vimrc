@@ -292,10 +292,8 @@ function! CommitFunction()
 	call inputsave()
 	let message = input('Enter commit message: ')
 	call inputrestore()
-	execute '!'.gitadd 	
-	execute '!'.gitdirchange." commit -m \"".message."\""
+	execute '!'.gitadd." && ".gitdirchange." commit -m \"".message."\""
 endfunction
-
 command! Commit call CommitFunction()
 " yeah
 function! Demo()
