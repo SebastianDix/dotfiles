@@ -87,7 +87,7 @@ highlight CursorLineNR ctermfg=red
 set laststatus=2
 func! STL()
 	let stl = '%#DiffChange# %f %#StatusLine# [%{(&fenc==""?&enc:&fenc).((exists("+bomb") && &bomb)?",B":"")}%R%H%W] %y [%p%%]'
-	let barWidth = &columns - 65 " <-- wild guess
+	let barWidth = &columns - 69 " <-- wild guess
 	let barWidth = barWidth < 3 ? 3 : barWidth
 
 	if line('$') > 1
@@ -99,7 +99,7 @@ func! STL()
 	let pad = strlen(line('$'))-strlen(line('.')) + 3 - strlen(virtcol('.')) + 3 - strlen(line('.')*100/line('$'))
 	let bar = repeat(' ',pad).' [%2*%'.barWidth.'.'.barWidth.'('
 				\.repeat('-',progress )
-				\.'%2*0%1*'
+				\.'%2*%#Diff#%p%%%1*'
 				\.repeat('-',barWidth - progress - 1).'%0*%)%<]'
 
 
