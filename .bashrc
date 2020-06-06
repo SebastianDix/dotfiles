@@ -206,3 +206,5 @@ esac
 # glob hidden files except .. and .
 shopt -s dotglob
 
+# speed hjkl up? :-/
+
