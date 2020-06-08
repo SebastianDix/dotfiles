@@ -283,7 +283,7 @@ command! GS call CheckGitStatusOfCurrentFile()
 " autocmd! BufWinLeave,BufLeave call CheckGitStatusOfCurrentFile()
 
 "commit file
-function! CommitFunction()
+function! CommitFunction(push)
 	let resolvedFileName=resolve(expand("%:p"))
 	let fileDirectory=fnamemodify(resolvedFileName, ":h")
 	let gitdirchange="git -C " . fileDirectory
@@ -293,8 +293,12 @@ function! CommitFunction()
 	let message = input('Enter commit message: ')
 	call inputrestore()
 	execute '!clear && '.gitadd." && ".gitdirchange." commit -m \"".message."\""
+	if a:push == 'push'
+		execute '!clear && '.gitdirchange.' push'
+	endif
 endfunction
 command! Commit call CommitFunction()
+command! Push call CommitFunction('push')
 " yeah
 function! Demo()
 	let curline = getline('.')
@@ -303,3 +307,16 @@ function! Demo()
 	call inputrestore()
 	call setline('.', curline . ' ' . name)
 endfunction  
+
+" attempt at overriding syntax highlighting
+" Two ##s will match red
+syntax match sebcomment1 /"*\s*##.*/
+highlight sebcomment1 ctermbg=magenta
+
+" Three #s will match orange
+syntax match sebcomment2 /"*\s*###.*/
+highlight sebcomment2 ctermbg=green
+
+" Three #s will match orange
+syntax match sebcomment3 /"*\s*####.*/
+highlight sebcomment3 ctermbg=cyan
