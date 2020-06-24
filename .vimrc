@@ -320,3 +320,10 @@ highlight sebcomment2 ctermbg=green
 " Three #s will match orange
 syntax match sebcomment3 /"*\s*####.*/
 highlight sebcomment3 ctermbg=cyan
+
+" enable this to use vim as a man page viewer according to vim.fandom.com
+let $PAGER=''
+
+" enable perisstent undo history
+set undofile " Maintian undo history between sessions
+set undodir=~/.vim/undodir
