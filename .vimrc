@@ -297,7 +297,7 @@ function! CommitFunction(push)
 		execute '!clear && '.gitdirchange.' push'
 	endif
 endfunction
-command! Commit call CommitFunction()
+command! Commit call CommitFunction('commit')
 command! Push call CommitFunction('push')
 " yeah
 function! Demo()
@@ -327,3 +327,6 @@ let $PAGER=''
 " enable perisstent undo history
 set undofile " Maintian undo history between sessions
 set undodir=~/.vim/undodir
+
+" hide all comments starting with #
+command! FoldComments set foldmethod=expr | set foldexpr=getline(v:lnum)=~'^#' 
