@@ -196,7 +196,7 @@ echo "n = no, nothing"
 read -n 1 -t 15 a
 printf "\n"
 case $a in
-	y* )    echo "Git pull in progress ... "; git -C ~/todo pull todo master; git -C ~/help pull help master ;; 
+	y* )    echo "Git pull in progress ... "; git -C ~/todo pull todo master; git -C ~/help pull help master; git -C ~/bin pull scripts master;; 
 
 	n* )     echo "no";;
 
@@ -206,5 +206,13 @@ esac
 # glob hidden files except .. and .
 shopt -s dotglob
 
-# speed hjkl up? :-/
+# use vim as a pager? according to vim.fandom.cpm 
+export MANPAGER="/bin/sh -c \"unset PAGER;col -b -x | \
+	    vim -R -c 'set ft=man nomod nolist' -c 'map q :q<CR>' \
+	        -c 'map <SPACE> <C-D>' -c 'map b <C-U>' \
+		    -c 'nmap K :Man <C-R>=expand(\\\"<cword>\\\")<CR><CR>' -\""
+
+# setup autocompletion for scripts
+complete -W "add commit push diff" g
+
 

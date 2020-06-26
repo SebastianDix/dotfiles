@@ -11,10 +11,12 @@ alias ralias="source ~/.bashrc"
     alias grep='grep --color=auto'
     alias fgrep='fgrep --color=auto'
     alias egrep='egrep --color=auto'
+    alias igrep='grep -i --color=auto'
 # some more ls aliases
 alias lll='ls -AFt1 --color | nl'
 alias la='ls -A'
 alias l='ls -CF'
+alias ll='ls -AFt1 --color | nl | head -15'
 # some git aliases
 alias gs='git status'
 alias ga='git add'
@@ -23,4 +25,3 @@ alias dotfiles='cd ~/dotfiles'
 alias gp='git push'
 alias powershellfolder='cd /mnt/c/Windows/System32/WindowsPowerShell/v1.0'
 alias bin='cd ~/bin'
-alias ll='ls -AFt1 --color | nl | head -15'
