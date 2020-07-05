@@ -1,3 +1,4 @@
+" Debian boilerplate info {{{ 
 " All system-wide defaults are set in $VIMRUNTIME/debian.vim and sourced by
 " the call to :runtime you can find below.  If you wish to change any of those
 " settings, you should do it in this file (/etc/vim/vimrc), since debian.vim
@@ -8,41 +9,46 @@
 " This line should not be removed as it ensures that various options are
 " properly set to work with the Vim-related packages available in Debian.
 runtime! debian.vim
-
+" }}}
+" {{{VIMRUNTIME/defaults.vim if not vimrc ...
 " Vim will load $VIMRUNTIME/defaults.vim if the user does not have a vimrc.
 " This happens after /etc/vim/vimrc(.local) are loaded, so it will override
 " any settings in these files.
 " If you don't want that to happen, uncomment the below line to prevent
 " defaults.vim from being loaded.
 " let g:skip_defaults_vim = 1
-
+" }}}
+" Explanation of set nocompatible {{{
 " Uncomment the next line to make Vim more Vi-compatible
 " NOTE: debian.vim sets 'nocompatible'.  Setting 'compatible' changes numerous
 " options, so any other options should be set AFTER setting 'compatible'.
 set nocompatible
-
-" Vim5 and later versions support syntax highlighting. Uncommenting the next
+" }}}
+" {{{ explanation of syntax highlighting
+" Vim5 and later versions support syntax highlighting. 
+" Uncommenting the next
 " line enables syntax highlighting by default.
 if has("syntax")
 	syntax on
 endif
-
-" If using a dark background within the editing area and syntax highlighting
+"}}}
+" {{{ If using a dark background within the editing area and syntax highlighting
 " turn on this option as well
 set background=dark
-
-" Uncomment the following to have Vim jump to the last position when
+"}}}
+" Jump to last position on reopen {{{
+"Uncomment the following to have Vim jump to the last position when
 " reopening a file
 if has("autocmd")
 	au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
-endif
-
+endif " }}} 
+" Filetype-based indentation and plugins {{{
 " Uncomment the following to have Vim load indentation rules and plugins
 " according to the detected filetype.
 if has("autocmd")
 	filetype plugin indent on
-endif
-
+endif " }}}
+" Default options {{{
 " The following are commented out as they cause vim to behave a lot
 " differently from regular Vi. They are highly recommended though.
 set showcmd		" Show (partial) command in status line.
@@ -53,37 +59,38 @@ set incsearch		" Incremental search
 set autowrite		" Automatically save before commands like :next and :make
 set hidden		" Hide buffers when they are abandoned
 set mouse=a		" Enable mouse usage (all modes)
-
-" this is the best colorscheme imo
-colorscheme desert
-
+" }}}
+" Source /etc/vim/vimrc.local {{{
 " Source a global configuration file if available
 if filereadable("/etc/vim/vimrc.local")
 	source /etc/vim/vimrc.local
-endif
-
-" highlight search results ( I guess )
+endif " }}} 
+" basic preferencees (fold,color,highlight,number) {{{
+" this is the best colorscheme imo
+colorscheme desert
+" do not highlight search esults
 set nohlsearch
-
-" navigation via :25t27 and similar commands is faster than 3j 5k
-set number
-
-" surrounding lines with #{{{ #}}} and typeng 'zm' in normal mode to fold
+" setting default fold method
 set foldmethod=marker
-
-" Plugins
+" indentation
+" }}}
+" Plugins {{{
 call plug#begin('~/.vim/plugged')
-Plug 'tpope/vim-fugitive'
+Plug 'chr4/nginx.vim'
 call plug#end()
-
-" this serves to highlight cursorline
-highlight LineNr ctermfg=DarkGrey
+" }}}
+" Cursorline highlighting {{{
+set number
 set cursorline
 set cursorcolumn
-highlight clear CursorLine
+
+highlight LineNr ctermfg=DarkGrey
+highlight clear CursorLine " get rid of underline
 highlight cursorline ctermbg=17
 highlight cursorcolumn ctermbg=17
 highlight CursorLineNR ctermfg=red
+" }}} 
+" status line {{{
 set laststatus=2
 func! STL()
 	let stl = '%#DiffChange# %f %#StatusLine# [%{(&fenc==""?&enc:&fenc).((exists("+bomb") && &bomb)?",B":"")}%R%H%W] %y [%p%%]'
@@ -131,17 +138,16 @@ endfunction
 hi def link User1 DiffAdd
 hi def link User2 DiffDelete
 set stl=%!STL()
-
-
-" snippets
+" end of statusline }}}
+" snippets {{{
 nnoremap ,bashif :-1read ${HOME}/.vim/snippets/bashif.sh<CR>2f[a
 nnoremap ,colors :-1read ${HOME}/.vim/snippets/colors.sh<CR>2f[a
 nnoremap ,bashreadfile :-1read ${HOME}/.vim/snippets/bashreadfile.sh<CR>2f[a
 nnoremap ,bashiterate :-1read ${HOME}/.vim/snippets/bashiterate.sh<CR>2f[a
 nnoremap ,bashmultiline :-1read ${HOME}/.vim/snippets/bashmultiline.sh<CR>1f[a
 nnoremap ,bashwhile :-1read ${HOME}/.vim/snippets/bashwhile.sh<CR>2f[a
-
-" clevertab
+" }}}
+" clevertab {{{
 function! CleverTab()
 	if strpart( getline('.'), 0, col('.')-1 ) =~ '^\s*$'
 		return "\<Tab>"
@@ -150,11 +156,10 @@ function! CleverTab()
 	endif
 endfunction
 inoremap <Tab> <C-R>=CleverTab()<CR>
-
-" vsplit your vimrc
-cnoremap <C-v> vsplit ~/.vimrc<cr>
+" }}}
 
 " remaps
+cnoremap <C-v> vsplit ~/.vimrc<cr> " vsplit your vimrc
 nnoremap ; :
 nnoremap <F2> :!clear && %<cr>
 inoremap <F2> <C-o>:w<CR>:!clear<CR>:!%<CR>
@@ -310,23 +315,48 @@ endfunction
 
 " attempt at overriding syntax highlighting
 " Two ##s will match red
-syntax match sebcomment1 /"*\s*##.*/
+syntax match sebcomment1 /"*\s*##RED##.*/
 highlight sebcomment1 ctermbg=magenta
 
 " Three #s will match orange
-syntax match sebcomment2 /"*\s*###.*/
+syntax match sebcomment2 /"*\s*##ORANGE##.*/
 highlight sebcomment2 ctermbg=green
 
 " Three #s will match orange
-syntax match sebcomment3 /"*\s*####.*/
+syntax match sebcomment3 /"*\s*##CYAN##.*/
 highlight sebcomment3 ctermbg=cyan
 
 " enable this to use vim as a man page viewer according to vim.fandom.com
 let $PAGER=''
 
-" enable perisstent undo history
+" enable perisstent undo history:q
 set undofile " Maintian undo history between sessions
 set undodir=~/.vim/undodir
 
 " hide all comments starting with #
-command! FoldComments set foldmethod=expr | set foldexpr=getline(v:lnum)=~'^#' 
+command! FoldComments set foldmethod=expr | set foldexpr=getline(v:lnum)=~'\s*#' 
+
+" custom folding
+set foldmethod=expr
+set foldexpr=GetPotionFold(v:lnum)
+set foldlevel=0
+
+function! GetPotionFold(lnum)
+	if getline(a:lnum) =~? '.*{{{.*'
+		let g:isinblock='yes' 
+	endif
+	if getline(a:lnum) =~? '.*}}}.*' 
+		let g:isinblock='no'
+	endif
+	 if getline(a:lnum) =~? '\v^\s*#.*$'
+			return 1	
+	 endif
+	 if getline(a:lnum) =~? '\v^\s*$'
+			return 1
+	 endif
+	if g:isinblock == 'yes'
+		return 1
+	en
+	return 0
+endfunction
+" autocmd! BufRead,BufNewFile *nginx* call NginxFold() 

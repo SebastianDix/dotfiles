@@ -18,8 +18,8 @@ shopt -s autocd
 shopt -s cdable_vars
 shopt -s direxpand
 # for setting history length see HISTSIZE and HISTFILESIZE in bash(1)
-HISTSIZE=1000
-HISTFILESIZE=2000
+HISTSIZE=100000
+HISTFILESIZE=20000
 
 # check the window size after each command and, if necessary,
 # update the values of LINES and COLUMNS.
@@ -183,7 +183,7 @@ fi
 echo `ssh-add -l | wc -l` SSH keys registered.
 unset env
 
-export HISTSIZE=10000;
+export HISTSIZE=100000;
 PROMPT_COMMAND='history -a'
 shopt -s cmdhist
 export HOME=${HOME}
@@ -214,5 +214,6 @@ export MANPAGER="/bin/sh -c \"unset PAGER;col -b -x | \
 
 # setup autocompletion for scripts
 complete -W "add commit push diff" g
+complete -W "tables users databases" show
 
 
