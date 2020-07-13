@@ -1,4 +1,6 @@
 " Debian boilerplate info {{{ 
+
+
 " All system-wide defaults are set in $VIMRUNTIME/debian.vim and sourced by
 " the call to :runtime you can find below.  If you wish to change any of those
 " settings, you should do it in this file (/etc/vim/vimrc), since debian.vim
@@ -313,7 +315,7 @@ function! Demo()
 	call setline('.', curline . ' ' . name)
 endfunction  
 
-" attempt at overriding syntax highlighting
+" attempt at overriding syntax highlighting {{{
 " Two ##s will match red
 syntax match sebcomment1 /"*\s*##RED##.*/
 highlight sebcomment1 ctermbg=magenta
@@ -325,18 +327,22 @@ highlight sebcomment2 ctermbg=green
 " Three #s will match orange
 syntax match sebcomment3 /"*\s*##CYAN##.*/
 highlight sebcomment3 ctermbg=cyan
-
+" }}} 
 " enable this to use vim as a man page viewer according to vim.fandom.com
 let $PAGER=''
 
 " enable perisstent undo history:q
 set undofile " Maintian undo history between sessions
 set undodir=~/.vim/undodir
+" set textwidth to zero so that it doesn't automatically insert new lines when
+" I don't want it to, like it did just
+" now!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+set tw=0
 
 " hide all comments starting with #
 command! FoldComments set foldmethod=expr | set foldexpr=getline(v:lnum)=~'\s*#' 
 
-" custom folding
+" custom folding {{{
 set foldmethod=expr
 set foldexpr=GetPotionFold(v:lnum)
 set foldlevel=0
@@ -359,4 +365,56 @@ function! GetPotionFold(lnum)
 	en
 	return 0
 endfunction
-" autocmd! BufRead,BufNewFile *nginx* call NginxFold() 
+" autocmd! BufRead,BufNewFile *nginx* call NginxFold() }}}
+
+" DESC function so that you can make notes about vim diff files before
+function! Note()
+	let prevmessage=system('cat /tmp/gitdiffnote')
+	echo prevmessage
+	let resolvedFileName=resolve(expand("%:p"))
+	let fileDirectory=fnamemodify(resolvedFileName, ":h")
+	call inputsave()
+	let message = input("Enter note on current file: ")
+	call inputrestore()
+	call writefile(split(resolvedFileName." | ".message,"\n",1),glob("/tmp/gitdiffnote"),"a")
+	execute "silent!clear && sed -i 's,^\s*,,g' /tmp/gitdiffnote"
+endfunction
+command! Note call Note()
+function! EchoSleepClear(message)
+set cmdheight=2
+echo a:message | silent 1sleep 
+echo ""
+set cmdheight=1
+return
+endfunction
+command! DelNote call writefile([""],glob("/tmp/gitdiffnote")) | call EchoSleepClear("Deleted /tmp/gitdiffnote")
+
+" wildmenu - how did I not know about his sooner?
+set wildmenu
+funct! Exec(command)
+    redir =>output
+    silent exec a:command
+    redir END
+    return output
+endfunct!
+
+" echoing oldfiles variable
+function! EchoFunction()
+	let oldfiles=join(v:oldfiles)
+	silent "!echo ".oldfiles
+	quit
+endfunction
+command! Echo call EchoFunction()
+
+" command to Bubak enter debug variable echo
+fun! DebugFunction()
+	let linenum=(line(".")-1) 
+	" exec line(".")-1."print"
+	let line=getline(linenum)
+let varname = substitute(line, "=.*", "", "")	
+let assignment = substitute(line, ".\{-} =", "", "")	
+let toprint="echo -e \"\\n".varname." is \\n\$".varname."\""
+let curline=(line("."))
+curline
+endfun
+command! Debug call DebugFunction()
