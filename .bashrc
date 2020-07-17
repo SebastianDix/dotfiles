@@ -183,7 +183,7 @@ echo `ssh-add -l | wc -l` SSH keys registered.
 unset env
 
 export HISTSIZE=1000000;
-PROMPT_COMMAND='history -a'
+PROMPT_COMMAND='history -a;jobcount=$(jobs | wc -l);if [[ $jobcount -eq 0 ]]; then jobprompt=""; else jobprompt=$jobcount; fi'
 shopt -s cmdhist
 export HOME=${HOME}
 export PATH=$PATH:~/bin
@@ -217,4 +217,4 @@ complete -W "tables users databases" show
 # complete -W "$(vimoldfiles | tr ':' ' ')" vimoldfiles;
 
 # histignore
-HISTIGNORE="cd:ll:ls:la:lv:lc:lll:cd ~:ls -la:vim:fg:gs"
+HISTIGNORE="cd:ll:ls:la:lv:lc:lll:cd ~:ls -la:vim:fg:gs:v:bin"

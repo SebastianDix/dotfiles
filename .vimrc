@@ -415,6 +415,9 @@ let varname = substitute(line, "=.*", "", "")
 let assignment = substitute(line, ".\{-} =", "", "")	
 let toprint="echo -e \"\\n".varname." is \\n\$".varname."\""
 let curline=(line("."))
-curline
+execute "normal! i".toprint
 endfun
 command! Debug call DebugFunction()
+
+" copy last terminal command into current line
+command! Fc read !cat ${HOME}/.bash_history | tail -1
