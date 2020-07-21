@@ -79,6 +79,7 @@ set foldmethod=marker
 " Plugins {{{
 call plug#begin('~/.vim/plugged')
 Plug 'chr4/nginx.vim'
+Plug 'tpope/vim-surround'
 call plug#end()
 " }}}
 " Cursorline highlighting {{{
@@ -178,7 +179,6 @@ nnoremap <F5> :buffers<CR>:buffer<Space>
 
 " autosave
 autocmd! TextChanged,TextChangedI <buffer> silent write
-
 " autoclear before commanad
 command! -nargs=1 R :!clear && <args>
 " custom commands (invoked by typing ':' and your command
@@ -352,7 +352,11 @@ function! GetPotionFold(lnum)
 		let g:isinblock='yes' 
 	endif
 	if getline(a:lnum) =~? '.*}}}.*' 
+		let g:isinblock='nextone'
+	endif
+	if g:isinblock == 'nextone'
 		let g:isinblock='no'
+		return 1
 	endif
 	 if getline(a:lnum) =~? '\v^\s*#.*$'
 			return 1	
@@ -421,3 +425,33 @@ command! Debug call DebugFunction()
 
 " copy last terminal command into current line
 command! Fc read !cat ${HOME}/.bash_history | tail -1
+
+" wrapped lines look better{{{
+" enable indentation
+set breakindent
+
+" ident by an additional 2 characters on wrapped lines, when line >= 40 characters, put 'showbreak' at start of line
+set breakindentopt=shift:2,min:40,sbr
+
+" append '>>' to indent
+set showbreak=>> 
+" }}}
+
+" paste from internet without doing 5 commands
+" getClipboard gets the 
+command! Paste r !~/bin/getClipboard
+command! Copy .w! /tmp/vimtoclip | !clear && cat /tmp/vimtoclip | ${HOME}/bin/setClipboard
+" paste vim line into windows clipboard
+
+
+" open Vimrc in a new tab
+command! Tabvimrc tabedit ~/.vimrc
+
+" F3 to repeat previous command
+nnoremap <F3> :!!<CR>
+
+" When leaving insert mode, indent
+function! SebIndent() 
+	let view=winsaveview() | execute "normal! ==" | call winrestview(view)
+endfunction
+autocmd! InsertLeave <buffer> call SebIndent()
