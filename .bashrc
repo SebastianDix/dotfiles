@@ -226,3 +226,10 @@ red="$(tput setaf 1)"; yellow="$(tput setaf 3)"; green="$(tput setaf 2)";blue="$
 
 # cool cd -- function
 source ${HOME}/bin/acd_func.sh
+
+# git diff
+git config --global diff.tool vimdiff
+git config --global merge.tool vimdiff
+git config --global difftool.prompt false
+git config --global mergetool.prompt false
+git config --global alias.d difftool
