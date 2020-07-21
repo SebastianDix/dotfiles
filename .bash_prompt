@@ -108,6 +108,7 @@ fi)'
 
 
 export GIT_SSL_NO_VERIFY=true
+export PS1+='`if [ -n "$(jobs -p)" ]; then echo "[\j] "; fi`'
 git config --global alias.lg "log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr)%C(bold blue)<%an>%Creset' --abbrev-commit"
 
 #if [ -n "$force_color_prompt" ]; then
