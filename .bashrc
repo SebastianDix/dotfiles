@@ -218,3 +218,11 @@ complete -W "tables users databases" show
 
 # histignore
 HISTIGNORE="cd:ll:ls:la:lv:lc:lll:cd ~:ls -la:vim:fg:gs:v:bin"
+
+# colors {{{
+red="$(tput setaf 1)"; yellow="$(tput setaf 3)"; green="$(tput setaf 2)";blue="$(tput setaf 4)"; cyan="$(tput setaf 6)";magenta="$(tput setaf 5)";bred="$(tput setab 1)";byellow="$(tput setab 3)";bgreen="$(tput setab 2)";bblue="$(tput setab 4)";bcyan="$(tput setab 6)";bmagenta="$(tput setab 5)";off="$(tput sgr0)";function red(){ printf "${red}$@${off}"; };function green(){ printf "${green}$@${off}"; };function yellow(){ printf "${yellow}$@${off}"; };function blue(){ printf "${blue}$@${off}"; };function magenta(){ printf "${magenta}$@${off}"; };function cyan(){ printf "${cyan}$@${off}"; };function bred(){ printf "${bred}$@${off}"; };function bgreen(){ printf "${bgreen}$@${off}"; };function byellow(){ printf "${byellow}$@${off}"; };function bblue(){ printf "${bblue}$@${off}"; };function bmagenta(){ printf "${bmagenta}$@${off}"; };function bcyan(){ printf "${bcyan}$@${off}"; }
+red="$(tput setaf 1)"; yellow="$(tput setaf 3)"; green="$(tput setaf 2)";blue="$(tput setaf 4)"; cyan="$(tput setaf 6)";magenta="$(tput setaf 5)";bred="$(tput setab 1)";byellow="$(tput setab 3)";bgreen="$(tput setab 2)";bblue="$(tput setab 4)";bcyan="$(tput setab 6)";bmagenta="$(tput setab 5)";off="$(tput sgr0)";function ered(){ echo "${red}$@${off}"; };function egreen(){ echo "${green}$@${off}"; };function eyellow(){ echo "${yellow}$@${off}"; };function eblue(){ echo "${blue}$@${off}"; };function emagenta(){ echo "${magenta}$@${off}"; };function ecyan(){ echo "${cyan}$@${off}"; };function ebred(){ echo "${bred}$@${off}"; };function ebgreen(){ echo "${bgreen}$@${off}"; };function ebyellow(){ echo "${byellow}$@${off}"; };function ebblue(){ echo "${bblue}$@${off}"; };function ebmagenta(){ echo "${bmagenta}$@${off}"; };function ebcyan(){ echo "${bcyan}$@${off}"; }
+#}}}
+
+# cool cd -- function
+source ${HOME}/bin/acd_func.sh
