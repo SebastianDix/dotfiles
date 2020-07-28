@@ -189,18 +189,18 @@ export HOME=${HOME}
 export PATH=$PATH:~/bin
 
 # automatically pull selected directories
-echo "Do you want to pull to todo and help and bin?"
-echo "y = yes everything"
-echo "n = no, nothing"
-read -n 1 -t 15 a
-printf "\n"
-case $a in
-	y* )    echo "Git pull in progress ... "; git -C ~/todo pull todo master; git -C ~/help pull help master; git -C ~/bin pull scripts master;; 
-
-	n* )     echo "no";;
-
-	* )     echo "Try again.";;
-esac
+#echo "Do you want to pull to todo and help and bin?"
+#echo "y = yes everything"
+#echo "n = no, nothing"
+#read -n 1 -t 15 a
+#printf "\n"
+#case $a in
+#y* )    echo "Git pull in progress ... "; git -C ~/todo pull todo master; git -C ~/help pull help master; git -C ~/bin pull scripts master;; 
+#
+#n* )     echo "no";;
+#
+#* )     echo "Try again.";;
+#esac
 
 # glob hidden files except .. and .
 shopt -s dotglob
@@ -233,3 +233,6 @@ git config --global merge.tool vimdiff
 git config --global difftool.prompt false
 git config --global mergetool.prompt false
 git config --global alias.d difftool
+
+# PAGER to vim
+export PAGER="/usr/share/vim/vim80/macros/less.sh"

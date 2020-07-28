@@ -80,6 +80,7 @@ set foldmethod=marker
 call plug#begin('~/.vim/plugged')
 Plug 'chr4/nginx.vim'
 Plug 'tpope/vim-surround'
+Plug 'gioele/vim-autoswap'
 call plug#end()
 " }}}
 " Cursorline highlighting {{{
@@ -117,9 +118,9 @@ func! STL()
 	" silent set modified?
 	" redir END
 	" if mod =~ "nomodified"
-	" 	let stl = stl . "  WRITTEN  "
+	"	let stl = stl . "  WRITTEN  "
 	" else
-	" 	let stl = stl . "           "
+	"	let stl = stl . "           "
 	" endif
 
 	let stl = "%#Search#" . $PWD . " %#StatusLine#" . stl
@@ -143,12 +144,12 @@ hi def link User2 DiffDelete
 set stl=%!STL()
 " end of statusline }}}
 " snippets {{{
-nnoremap ,bashif :-1read ${HOME}/.vim/snippets/bashif.sh<CR>2f[a
-nnoremap ,colors :-1read ${HOME}/.vim/snippets/colors.sh<CR>2f[a
-nnoremap ,bashreadfile :-1read ${HOME}/.vim/snippets/bashreadfile.sh<CR>2f[a
-nnoremap ,bashiterate :-1read ${HOME}/.vim/snippets/bashiterate.sh<CR>2f[a
-nnoremap ,bashmultiline :-1read ${HOME}/.vim/snippets/bashmultiline.sh<CR>1f[a
-nnoremap ,bashwhile :-1read ${HOME}/.vim/snippets/bashwhile.sh<CR>2f[a
+" nnoremap ,bashif :-1read ${HOME}/.vim/snippets/bashif.sh<CR>2f[a
+" nnoremap ,colors :-1read ${HOME}/.vim/snippets/colors.sh<CR>2f[a
+" nnoremap ,bashreadfile :-1read ${HOME}/.vim/snippets/bashreadfile.sh<CR>2f[a
+" nnoremap ,bashiterate :-1read ${HOME}/.vim/snippets/bashiterate.sh<CR>2f[a
+" nnoremap ,bashmultiline :-1read ${HOME}/.vim/snippets/bashmultiline.sh<CR>1f[a
+" nnoremap ,bashwhile :-1read ${HOME}/.vim/snippets/bashwhile.sh<CR>2f[a
 " }}}
 " clevertab {{{
 function! CleverTab()
@@ -358,12 +359,12 @@ function! GetPotionFold(lnum)
 		let g:isinblock='no'
 		return 1
 	endif
-	 if getline(a:lnum) =~? '\v^\s*#.*$'
-			return 1	
-	 endif
-	 if getline(a:lnum) =~? '\v^\s*$'
-			return 1
-	 endif
+	if getline(a:lnum) =~? '\v^\s*#.*$'
+		return 1	
+	endif
+	if getline(a:lnum) =~? '\v^\s*$'
+		return 1
+	endif
 	if g:isinblock == 'yes'
 		return 1
 	en
@@ -385,21 +386,21 @@ function! Note()
 endfunction
 command! Note call Note()
 function! EchoSleepClear(message)
-set cmdheight=2
-echo a:message | silent 1sleep 
-echo ""
-set cmdheight=1
-return
+	set cmdheight=2
+	echo a:message | silent 1sleep 
+	echo ""
+	set cmdheight=1
+	return
 endfunction
 command! DelNote call writefile([""],glob("/tmp/gitdiffnote")) | call EchoSleepClear("Deleted /tmp/gitdiffnote")
 
 " wildmenu - how did I not know about his sooner?
 set wildmenu
 funct! Exec(command)
-    redir =>output
-    silent exec a:command
-    redir END
-    return output
+	redir =>output
+	silent exec a:command
+	redir END
+	return output
 endfunct!
 
 " echoing oldfiles variable
@@ -415,11 +416,11 @@ fun! DebugFunction()
 	let linenum=(line(".")-1) 
 	" exec line(".")-1."print"
 	let line=getline(linenum)
-let varname = substitute(line, "=.*", "", "")	
-let assignment = substitute(line, ".\{-} =", "", "")	
-let toprint="echo -e \"\\n".varname." is \\n\$".varname."\""
-let curline=(line("."))
-execute "normal! i".toprint
+	let varname = substitute(line, "=.*", "", "")	
+	let assignment = substitute(line, ".\{-} =", "", "")	
+	let toprint="echo -e \"\\n".varname." is \\n\$".varname."\""
+	let curline=(line("."))
+	execute "normal! i".toprint
 endfun
 command! Debug call DebugFunction()
 
@@ -455,3 +456,27 @@ function! SebIndent()
 	let view=winsaveview() | execute "normal! ==" | call winrestview(view)
 endfunction
 autocmd! InsertLeave <buffer> call SebIndent()
+
+" stop myself from saving, I have autosave for gods sake
+cabbrev w <c-r>=(getcmdtype()==':' && getcmdpos()==1 ? '!clear && tput cup 300 300 && while true; do tput setab 1; echo bubak; tput sgr0; done' : 'w')<CR>
+" 
+inoremap <F5> <C-R>=ListMonths()<CR>
+let snippets=system('ls ${HOME}/.vim/snippets | xargs')
+let snippets=split(snippets)
+let constant="snip__"
+for snip in snippets
+	execute "iabbrev ".constant.snip "<C-R>=system('cat ${HOME}/.vim/snippets/".snip."')<CR>"
+endfor
+call map(snippets,"g:constant.v:val")
+
+func! ListSnippets(snippets)
+	call complete(col('.'),a:snippets)
+	return ''
+endfunc
+inoremap <F5> <C-R>=ListSnippets(snippets)<CR>
+set path=.,/usr/include,~/scripts,~/bin
+
+
+
+
+
