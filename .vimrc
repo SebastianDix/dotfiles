@@ -373,7 +373,8 @@ endfunction
 
 " DESC function so that you can make notes about vim diff files before
 function! Note()
-	let prevmessage=system('cat /tmp/gitdiffnote')
+	
+	let prevmessage=system('test -e /tmp/gitdiffnote && cat /tmp/gitdiffnote')
 	echo prevmessage
 	let resolvedFileName=resolve(expand("%:p"))
 	let fileDirectory=fnamemodify(resolvedFileName, ":h")
@@ -384,6 +385,7 @@ function! Note()
 	execute "silent!clear && sed -i 's,^\s*,,g' /tmp/gitdiffnote"
 endfunction
 command! Note call Note()
+
 function! EchoSleepClear(message)
 set cmdheight=2
 echo a:message | silent 1sleep 
