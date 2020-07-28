@@ -219,3 +219,6 @@ git config --global merge.tool vimdiff
 git config --global difftool.prompt false
 git config --global mergetool.prompt false
 git config --global alias.d difftool
+
+# PAGER to vim
+export PAGER="/usr/share/vim/vim80/macros/less.sh"
