@@ -484,3 +484,4 @@ nnoremap <F10> :set invpaste paste?<CR>
 set pastetoggle=<F10>
 set showmode
 
+
