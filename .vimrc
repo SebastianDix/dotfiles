@@ -460,9 +460,7 @@ function! SebIndent()
 endfunction
 autocmd! InsertLeave <buffer> call SebIndent()
 
-" stop myself from saving, I have autosave for gods sake
-cabbrev w <c-r>=(getcmdtype()==':' && getcmdpos()==1 ? '!clear && tput cup 300 300 && while true; do tput setab 1; echo bubak; tput sgr0; done' : 'w')<CR>
-" 
+" snippets! 
 inoremap <F5> <C-R>=ListMonths()<CR>
 let snippets=system('ls ${HOME}/.vim/snippets | xargs')
 let snippets=split(snippets)
@@ -484,4 +482,5 @@ nnoremap <F10> :set invpaste paste?<CR>
 set pastetoggle=<F10>
 set showmode
 
-
+" fixing vimdiff
+set diffexpr="diff -e"

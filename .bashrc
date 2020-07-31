@@ -206,19 +206,71 @@ complete -W "tables users databases" show
 HISTIGNORE="cd:ll:ls:la:lv:lc:lll:cd ~:ls -la:vim:fg:gs:v:bin"
 
 # colors {{{
-red="$(tput setaf 1)"; yellow="$(tput setaf 3)"; green="$(tput setaf 2)";blue="$(tput setaf 4)"; cyan="$(tput setaf 6)";magenta="$(tput setaf 5)";bred="$(tput setab 1)";byellow="$(tput setab 3)";bgreen="$(tput setab 2)";bblue="$(tput setab 4)";bcyan="$(tput setab 6)";bmagenta="$(tput setab 5)";off="$(tput sgr0)";function red(){ printf "${red}$@${off}"; };function green(){ printf "${green}$@${off}"; };function yellow(){ printf "${yellow}$@${off}"; };function blue(){ printf "${blue}$@${off}"; };function magenta(){ printf "${magenta}$@${off}"; };function cyan(){ printf "${cyan}$@${off}"; };function bred(){ printf "${bred}$@${off}"; };function bgreen(){ printf "${bgreen}$@${off}"; };function byellow(){ printf "${byellow}$@${off}"; };function bblue(){ printf "${bblue}$@${off}"; };function bmagenta(){ printf "${bmagenta}$@${off}"; };function bcyan(){ printf "${bcyan}$@${off}"; }
-red="$(tput setaf 1)"; yellow="$(tput setaf 3)"; green="$(tput setaf 2)";blue="$(tput setaf 4)"; cyan="$(tput setaf 6)";magenta="$(tput setaf 5)";bred="$(tput setab 1)";byellow="$(tput setab 3)";bgreen="$(tput setab 2)";bblue="$(tput setab 4)";bcyan="$(tput setab 6)";bmagenta="$(tput setab 5)";off="$(tput sgr0)";function ered(){ echo "${red}$@${off}"; };function egreen(){ echo "${green}$@${off}"; };function eyellow(){ echo "${yellow}$@${off}"; };function eblue(){ echo "${blue}$@${off}"; };function emagenta(){ echo "${magenta}$@${off}"; };function ecyan(){ echo "${cyan}$@${off}"; };function ebred(){ echo "${bred}$@${off}"; };function ebgreen(){ echo "${bgreen}$@${off}"; };function ebyellow(){ echo "${byellow}$@${off}"; };function ebblue(){ echo "${bblue}$@${off}"; };function ebmagenta(){ echo "${bmagenta}$@${off}"; };function ebcyan(){ echo "${bcyan}$@${off}"; }
+export red="$(tput setaf 1)"
+export yellow="$(tput setaf 3)"
+export green="$(tput setaf 2)";blue="$(tput setaf 4)"
+export cyan="$(tput setaf 6)"
+export magenta="$(tput setaf 5)"
+export bred="$(tput setab 1)"
+export byellow="$(tput setab 3)"
+export bgreen="$(tput setab 2)"
+export bblue="$(tput setab 4)"
+export bcyan="$(tput setab 6)"
+export bmagenta="$(tput setab 5)"
+export off="$(tput sgr0)"
+function red(){ printf "${red}$@${off}"; }
+function green(){ printf "${green}$@${off}"; }
+function yellow(){ printf "${yellow}$@${off}"; }
+function blue(){ printf "${blue}$@${off}"; }
+function magenta(){ printf "${magenta}$@${off}"; }
+function cyan(){ printf "${cyan}$@${off}"; }
+function bred(){ printf "${bred}$@${off}"; }
+function bgreen(){ printf "${bgreen}$@${off}"; }
+function byellow(){ printf "${byellow}$@${off}"; }
+function bblue(){ printf "${bblue}$@${off}"; }
+function bmagenta(){ printf "${bmagenta}$@${off}"; }
+function bcyan(){ printf "${bcyan}$@${off}"; }
+function ered(){ echo "${red}$@${off}"; }
+function egreen(){ echo "${green}$@${off}"; }
+function eyellow(){ echo "${yellow}$@${off}"; }
+function eblue(){ echo "${blue}$@${off}"; }
+function emagenta(){ echo "${magenta}$@${off}"; }
+function ecyan(){ echo "${cyan}$@${off}"; }
+function ebred(){ echo "${bred}$@${off}"; }
+function ebgreen(){ echo "${bgreen}$@${off}"; }
+function ebyellow(){ echo "${byellow}$@${off}"; }
+function ebblue(){ echo "${bblue}$@${off}"; }
+function ebmagenta(){ echo "${bmagenta}$@${off}"; }
+function ebcyan(){ echo "${bcyan}$@${off}"; }
+export -f red
+export -f green
+export -f yellow
+export -f blue
+export -f magenta
+export -f cyan
+export -f bred
+export -f bgreen
+export -f byellow
+export -f bblue
+export -f bmagenta
+export -f bcyan
+export -f ered
+export -f egreen
+export -f eyellow
+export -f eblue
+export -f emagenta
+export -f ecyan
+export -f ebred
+export -f ebgreen
+export -f ebyellow
+export -f ebblue
+export -f ebmagenta
+export -f ebcyan
 #}}}
 
 # cool cd -- function
 source ${HOME}/bin/acd_func.sh
-
-# git diff
-git config --global diff.tool vimdiff
-git config --global merge.tool vimdiff
-git config --global difftool.prompt false
-git config --global mergetool.prompt false
-git config --global alias.d difftool
-
 # PAGER to vim
-export PAGER="/usr/share/vim/vim80/macros/less.sh"
+export PAGER="/usr/bin/less"
+export BASH_ENV="${HOME}/.bash_aliases"
+
