@@ -460,8 +460,7 @@ endfunction
 autocmd! InsertLeave <buffer> call SebIndent()
 
 " stop myself from saving, I have autosave for gods sake
-cabbrev w <c-r>=(getcmdtype()==':' && getcmdpos()==1 ? '!clear && tput cup 300 300 && while true; do tput setab 1; echo bubak; tput sgr0; done' : 'w')<CR>
-" 
+ 
 inoremap <F5> <C-R>=ListMonths()<CR>
 let snippets=system('ls ${HOME}/.vim/snippets | xargs')
 let snippets=split(snippets)
