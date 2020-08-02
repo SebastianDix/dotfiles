@@ -1,3 +1,4 @@
+shopt -s expand_aliases
 alias hetzner="ssh -F ~/.ssh/config hetzner"
 alias aliases="vim ~/.bash_aliases && source ~/.bashrc"
 alias bashrc="vim ~/.bashrc && source ~/.bashrc"
@@ -29,7 +30,6 @@ alias rnginx='systemctl restart nginx.service'
 alias snginx='systemctl status nginx.service'
 alias add='git add'
 alias gommit="git commit -m \"${*}\""
-alias diff=""
 alias v="vim"
 alias vl='vim -c "normal '\''0"' #'"
 alias lvim='vim -c "normal '\''0"' #'"
@@ -57,3 +57,4 @@ alias vv='vimselectfile --quick'
 alias s='status'
 alias ug='updateGit'
 alias b='pushd ~/bin && ll'
+alias vess="/usr/share/vim/vim80/macros/less.sh"

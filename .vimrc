@@ -81,6 +81,7 @@ call plug#begin('~/.vim/plugged')
 Plug 'chr4/nginx.vim'
 Plug 'tpope/vim-surround'
 Plug 'gioele/vim-autoswap'
+Plug 'ConradIrwin/vim-bracketed-paste'
 call plug#end()
 " }}}
 " Cursorline highlighting {{{
@@ -459,8 +460,6 @@ function! SebIndent()
 endfunction
 autocmd! InsertLeave <buffer> call SebIndent()
 
-" stop myself from saving, I have autosave for gods sake
- 
 inoremap <F5> <C-R>=ListMonths()<CR>
 let snippets=system('ls ${HOME}/.vim/snippets | xargs')
 let snippets=split(snippets)
@@ -477,7 +476,10 @@ endfunc
 inoremap <F5> <C-R>=ListSnippets(snippets)<CR>
 set path=.,/usr/include,~/scripts,~/bin
 
+" be able to set paste during insert mode
+nnoremap <F10> :set invpaste paste?<CR>
+set pastetoggle=<F10>
+set showmode
 
-
-
-
+" fixing vimdiff
+set diffexpr="diff -e"
