@@ -58,3 +58,4 @@ alias s='status'
 alias ug='updateGit'
 alias b='pushd ~/bin && ll'
 alias vess="/usr/share/vim/vim80/macros/less.sh"
+alias ig="grep -i"
