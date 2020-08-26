@@ -82,6 +82,9 @@ Plug 'chr4/nginx.vim'
 Plug 'tpope/vim-surround'
 Plug 'gioele/vim-autoswap'
 Plug 'ConradIrwin/vim-bracketed-paste'
+Plug 'blueyed/vim-diminactive'
+Plug 'morhetz/gruvbox'
+Plug 'ycm-core/YouCompleteMe'
 call plug#end()
 " }}}
 " Cursorline highlighting {{{
@@ -483,3 +486,7 @@ set showmode
 
 " fixing vimdiff
 set diffexpr="diff -e"
+
+" diminactive
+hi ColorColumn ctermbg=0
+colorscheme gruvbox
