@@ -1,5 +1,5 @@
 shopt -s expand_aliases
-alias hetzner="ssh -F ~/.ssh/config -v -c aes256-ctr hetzner"
+alias hetzner="ssh -F ~/.ssh/config -c aes256-ctr hetzner"
 alias aliases="vim ~/.bash_aliases && source ~/.bashrc"
 alias bashrc="vim ~/.bashrc && source ~/.bashrc"
 alias inputrc="vim ~/.inputrc && bind -f ~/.inputrc"
