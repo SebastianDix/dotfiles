@@ -186,7 +186,7 @@ export HISTSIZE=1000000;
 PROMPT_COMMAND='history -a;jobcount=$(jobs | wc -l);if [[ $jobcount -eq 0 ]]; then jobprompt=""; else jobprompt=$jobcount; fi'
 shopt -s cmdhist
 export HOME=${HOME}
-export PATH=$PATH:~/bin
+export PATH=$PATH:~/bin:~/bin/VENV
 
 # glob hidden files except .. and .
 shopt -s dotglob
@@ -274,3 +274,4 @@ source ${HOME}/bin/acd_func.sh
 export PAGER="/usr/bin/less"
 export BASH_ENV="${HOME}/.bash_aliases"
 
+export PYTHONPATH="/usr/local/lib/python3.6/dist-packages/"
