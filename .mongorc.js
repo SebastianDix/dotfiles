@@ -818,7 +818,7 @@ prompt = function() {
         };
     }
     var state = isMongos() ? '[mongos]' : rs_state;
-    return host + '(' + process + '-' + version + ')' + state + ' ' + db + '> ';
+    return '(' + process + '-' + version + ')' + state + ' ' + db + '> ';
 };
 
 function listDbs(){
@@ -1758,3 +1758,10 @@ shellHelper.count = function (what) {
 }
 
 
+Object.defineProperty(this, 'lc', {
+    get: function() { 
+	    return db.getCollectionNames()
+    },
+    enumerable: true,
+    configurable: true
+});
