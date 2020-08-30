@@ -85,6 +85,7 @@ Plug 'ConradIrwin/vim-bracketed-paste'
 Plug 'blueyed/vim-diminactive'
 Plug 'morhetz/gruvbox'
 Plug 'ycm-core/YouCompleteMe'
+Plug 'hdima/python-syntax'
 call plug#end()
 " }}}
 " Cursorline highlighting {{{
@@ -490,3 +491,13 @@ set diffexpr="diff -e"
 " diminactive
 hi ColorColumn ctermbg=0
 colorscheme gruvbox
+
+" python stuff 
+
+autocmd FileType html setlocal shiftwidth=2 tabstop=2
+" fun! SetNoColon()
+" syn match noColon /\s*if.*[^:]$/
+" highlight noColon ctermbg=red 
+" endfu
+" autocmd bufenter *.py :call SetNoColon()
+" autocmd filetype python :call SetNoColon()
