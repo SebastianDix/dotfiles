@@ -274,4 +274,7 @@ source ${HOME}/bin/acd_func.sh
 export PAGER="/usr/bin/less"
 export BASH_ENV="${HOME}/.bash_aliases"
 
-export PYTHONPATH="/usr/local/lib/python3.6/dist-packages/"
+#PYENVhttps://github.com/pyenv/pyenv#installation 
+if command -v pyenv 1>/dev/null 2>&1; then
+  eval "$(pyenv init -)"
+fi

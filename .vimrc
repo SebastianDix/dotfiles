@@ -1,92 +1,96 @@
-" Debian boilerplate info {{{ 
+" Debian boilerplate info {{{ e:wxhh
 
 
-" All system-wide defaults are set in $VIMRUNTIME/debian.vim and sourced by
-" the call to :runtime you can find below.  If you wish to change any of those
-" settings, you should do it in this file (/etc/vim/vimrc), since debian.vim
-" will be overwritten everytime an upgrade of the vim packages is performed.
-" It is recommended to make changes after sourcing debian.vim since it alters
-" the value of the 'compatible' option.
+	" All system-wide defaults are set in $VIMRUNTIME/debian.vim and sourced by
+	" the call to :runtime you can find below.  If you wish to change any of those
+	" settings, you should do it in this file (/etc/vim/vimrc), since debian.vim
+	" will be overwritten everytime an upgrade of the vim packages is performed.
+	" It is recommended to make changes after sourcing debian.vim since it alters
+	" the value of the 'compatible' option.
 
-" This line should not be removed as it ensures that various options are
-" properly set to work with the Vim-related packages available in Debian.
-runtime! debian.vim
-" }}}
-" {{{VIMRUNTIME/defaults.vim if not vimrc ...
-" Vim will load $VIMRUNTIME/defaults.vim if the user does not have a vimrc.
-" This happens after /etc/vim/vimrc(.local) are loaded, so it will override
-" any settings in these files.
-" If you don't want that to happen, uncomment the below line to prevent
-" defaults.vim from being loaded.
-" let g:skip_defaults_vim = 1
-" }}}
-" Explanation of set nocompatible {{{
-" Uncomment the next line to make Vim more Vi-compatible
-" NOTE: debian.vim sets 'nocompatible'.  Setting 'compatible' changes numerous
-" options, so any other options should be set AFTER setting 'compatible'.
-set nocompatible
-" }}}
-" {{{ explanation of syntax highlighting
-" Vim5 and later versions support syntax highlighting. 
-" Uncommenting the next
-" line enables syntax highlighting by default.
-if has("syntax")
-	syntax on
-endif
-"}}}
-" {{{ If using a dark background within the editing area and syntax highlighting
-" turn on this option as well
-set background=dark
-"}}}
-" Jump to last position on reopen {{{
-"Uncomment the following to have Vim jump to the last position when
-" reopening a file
-if has("autocmd")
-	au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
-endif " }}} 
-" Filetype-based indentation and plugins {{{
-" Uncomment the following to have Vim load indentation rules and plugins
-" according to the detected filetype.
-if has("autocmd")
-	filetype plugin indent on
-endif " }}}
-" Default options {{{
-" The following are commented out as they cause vim to behave a lot
-" differently from regular Vi. They are highly recommended though.
-set showcmd		" Show (partial) command in status line.
-set showmatch		" Show matching brackets.
-set ignorecase		" Do case insensitive matching
-set smartcase		" Do smart case matching
-set incsearch		" Incremental search
-set autowrite		" Automatically save before commands like :next and :make
-set hidden		" Hide buffers when they are abandoned
-set mouse=a		" Enable mouse usage (all modes)
-" }}}
-" Source /etc/vim/vimrc.local {{{
-" Source a global configuration file if available
-if filereadable("/etc/vim/vimrc.local")
-	source /etc/vim/vimrc.local
-endif " }}} 
-" basic preferencees (fold,color,highlight,number) {{{
-" this is the best colorscheme imo
-colorscheme desert
-" do not highlight search esults
-set nohlsearch
-" setting default fold method
-set foldmethod=marker
-" indentation
-" }}}
+	" This line should not be removed as it ensures that various options are
+	" properly set to work with the Vim-related packages available in Debian.
+	runtime! debian.vim
+	" }}}
+	" {{{VIMRUNTIME/defaults.vim if not vimrc ...
+	" Vim will load $VIMRUNTIME/defaults.vim if the user does not have a vimrc.
+	" This happens after /etc/vim/vimrc(.local) are loaded, so it will override
+	" any settings in these files.
+	" If you don't want that to happen, uncomment the below line to prevent
+	" defaults.vim from being loaded.
+	" let g:skip_defaults_vim = 1
+	" }}}
+	" Explanation of set nocompatible {{{
+	" Uncomment the next line to make Vim more Vi-compatible
+	" NOTE: debian.vim sets 'nocompatible'.  Setting 'compatible' changes numerous
+	" options, so any other options should be set AFTER setting 'compatible'.
+	set nocompatible
+	" }}}
+	" {{{ explanation of syntax highlighting
+	" Vim5 and later versions support syntax highlighting. 
+	" Uncommenting the next
+	" line enables syntax highlighting by default.
+	if has("syntax")
+		syntax on
+	endif
+	"}}}
+	" {{{ If using a dark background within the editing area and syntax highlighting
+	" turn on this option as well
+	set background=dark
+	"}}}
+	" Jump to last position on reopen {{{
+	"Uncomment the following to have Vim jump to the last position when
+	" reopening a file
+	if has("autocmd")
+		au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
+	endif " }}} 
+	" Filetype-based indentation and plugins {{{
+	" Uncomment the following to have Vim load indentation rules and plugins
+	" according to the detected filetype.
+	if has("autocmd")
+		filetype plugin indent on
+	endif " }}}
+	" Default options {{{
+	" The following are commented out as they cause vim to behave a lot
+	" differently from regular Vi. They are highly recommended though.
+	set showcmd		" Show (partial) command in status line.
+	set showmatch		" Show matching brackets.
+	set ignorecase		" Do case insensitive matching
+	set smartcase		" Do smart case matching
+	set incsearch		" Incremental search
+	set autowrite		" Automatically save before commands like :next and :make
+	set hidden		" Hide buffers when they are abandoned
+	set mouse=a		" Enable mouse usage (all modes)
+	" }}}
+	" Source /etc/vim/vimrc.local {{{
+	" Source a global configuration file if available
+	if filereadable("/etc/vim/vimrc.local")
+		source /etc/vim/vimrc.local
+	endif " }}} 
+	" basic preferencees (fold,color,highlight,number) {{{
+	" this is the best colorscheme imo
+	colorscheme desert
+	" do not highlight search esults
+	set nohlsearch
+	" setting default fold method
+	set foldmethod=marker
+	" indentation
+	" }}}
 " Plugins {{{
-call plug#begin('~/.vim/plugged')
-Plug 'chr4/nginx.vim'
-Plug 'tpope/vim-surround'
-Plug 'gioele/vim-autoswap'
-Plug 'ConradIrwin/vim-bracketed-paste'
-Plug 'blueyed/vim-diminactive'
-Plug 'morhetz/gruvbox'
-Plug 'ycm-core/YouCompleteMe'
-Plug 'hdima/python-syntax'
-call plug#end()
+set nocompatible              " be iMproved, required
+filetype off                  " required
+set rtp+=~/.vim/bundle/Vundle.vim
+call vundle#begin()
+Plugin 'chr4/nginx.vim'
+Plugin 'tpope/vim-surround'
+Plugin 'gioele/vim-autoswap'
+Plugin 'ConradIrwin/vim-bracketed-paste'
+Plugin 'blueyed/vim-diminactive'
+Plugin 'morhetz/gruvbox'
+Plugin 'ycm-core/YouCompleteMe'
+Plugin 'hdima/python-syntax'
+call vundle#end()
+filetype plugin indent on    " required
 " }}}
 " Cursorline highlighting {{{
 set number
@@ -172,6 +176,31 @@ cnoremap <C-v> vsplit ~/.vimrc<cr> " vsplit your vimrc
 nnoremap ; :
 nnoremap <F2> :!clear && %<cr>
 inoremap <F2> <C-o>:w<CR>:!clear<CR>:!%<CR>
+nnoremap <F3> :!clear && pipenv run %<cr>
+nnoremap <C-h> <C-w>h
+nnoremap <C-j> <C-w>j
+nnoremap <C-k> <C-w>k
+nnoremap <C-l> <C-w>l
+function! RunPyWithArgument()
+	let tempfile = system('cat /tmp/vimscriptargument')
+	if tempfile =~ "No such file or directory" 
+		execute "!touch /tmp/vimscriptargument"
+	endif
+	if empty(tempfile)
+		execute "!echo \"file is supposed to be empty\""
+		execute "!cat /tmp/vimscriptargument" 
+		call inputsave()
+		let response = input("Enter argument: ","prdel","file")
+		call inputrestore()
+		silent "!echo ".response." > /tmp/vimscriptargument"
+	else
+		let response = tempfile	
+	endif
+	let lol = "!clear && pipenv run % ".response
+	execute lol
+endfunction
+
+	nnoremap <F4> :call RunPyWithArgument()<CR>
 nnoremap <F12> <ESC>:set paste!<CR>
 inoremap <silent> <F12> <ESC>:set paste!<CR>
 nnoremap <F9> :so ~/.vimrc<CR>
@@ -456,7 +485,6 @@ command! Copy .w! /tmp/vimtoclip | !clear && cat /tmp/vimtoclip | ${HOME}/bin/se
 command! Tabvimrc tabedit ~/.vimrc
 
 " F3 to repeat previous command
-nnoremap <F3> :!!<CR>
 
 " When leaving insert mode, indent
 function! SebIndent() 
