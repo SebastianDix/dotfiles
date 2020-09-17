@@ -181,7 +181,7 @@ nnoremap <C-h> <C-w>h
 nnoremap <C-j> <C-w>j
 nnoremap <C-k> <C-w>k
 nnoremap <C-l> <C-w>l
-function! RunPyWithArgument()
+function! RunPyWithArgument(w3m)
 	let tempfile = system('cat /tmp/vimscriptargument')
 	if tempfile =~ "No such file or directory" 
 		execute "!touch /tmp/vimscriptargument"
@@ -196,11 +196,17 @@ function! RunPyWithArgument()
 	else
 		let response = tempfile	
 	endif
-	let lol = "!clear && pipenv run % ".response
-	execute lol
+	if a:w3m == 1
+		let lol = "!clear && pipenv run % ".response." | w3m -dump -T text/html"
+	else 
+		let lol = "!clear && pipenv run % ".response
+	endif
+	execute lol 
+
 endfunction
 
-	nnoremap <F4> :call RunPyWithArgument()<CR>
+nnoremap <F4> :call RunPyWithArgument(0)<CR>
+nnoremap <F5> :call RunPyWithArgument(1)<CR>
 nnoremap <F12> <ESC>:set paste!<CR>
 inoremap <silent> <F12> <ESC>:set paste!<CR>
 nnoremap <F9> :so ~/.vimrc<CR>
@@ -210,7 +216,6 @@ nnoremap Q gg=G<C-o><C-o>
 ":let a = getcurpos()[1] \| silent execute "normal! gg=GG" \| execute a <CR>zz
 imap <C-l> <C-o>x
 " display list of buffers and 
-nnoremap <F5> :buffers<CR>:buffer<Space>
 
 " autosave
 autocmd! TextChanged,TextChangedI <buffer> silent write
@@ -492,14 +497,13 @@ function! SebIndent()
 endfunction
 autocmd! InsertLeave <buffer> call SebIndent()
 
-inoremap <F5> <C-R>=ListMonths()<CR>
-let snippets=system('ls ${HOME}/.vim/snippets | xargs')
-let snippets=split(snippets)
-let constant="snip__"
-for snip in snippets
-	execute "iabbrev ".constant.snip "<C-R>=system('cat ${HOME}/.vim/snippets/".snip."')<CR>"
-endfor
-call map(snippets,"g:constant.v:val")
+" let snippets=system('ls ${HOME}/.vim/snippets | xargs')
+" let snippets=split(snippets)
+" let constant="snip__"
+" for snip in snippets
+" 	execute "iabbrev ".constant.snip "<C-R>=system('cat ${HOME}/.vim/snippets/".snip."')<CR>"
+" endfor
+" call map(snippets,"g:constant.v:val")
 
 func! ListSnippets(snippets)
 	call complete(col('.'),a:snippets)

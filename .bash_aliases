@@ -1,6 +1,5 @@
-
 shopt -s expand_aliases
-alias run="~/bin/run"
+alias fixpy="export PYTHONPATH=$(find ~/.local/share/virtualenvs/ -iname "site-packages" | xargs | tr " " ":")"
 alias hetzner="ssh -F ~/.ssh/config -c aes256-ctr hetzner"
 alias vpy="cd ~/bin/VENV && activate"
 alias cds="showlastdirs"
