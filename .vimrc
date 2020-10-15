@@ -81,14 +81,13 @@ set nocompatible              " be iMproved, required
 filetype off                  " required
 set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
+Plugin 'VundleVim/Vundle.vim'
 Plugin 'chr4/nginx.vim'
 Plugin 'tpope/vim-surround'
 Plugin 'gioele/vim-autoswap'
-Plugin 'ConradIrwin/vim-bracketed-paste'
-Plugin 'blueyed/vim-diminactive'
 Plugin 'morhetz/gruvbox'
 Plugin 'ycm-core/YouCompleteMe'
-Plugin 'hdima/python-syntax'
+Plugin 'sheerun/vim-polyglot'
 call vundle#end()
 filetype plugin indent on    " required
 " }}}
@@ -99,9 +98,9 @@ set cursorcolumn
 
 highlight LineNr ctermfg=DarkGrey
 highlight clear CursorLine " get rid of underline
-highlight cursorline ctermbg=17
-highlight cursorcolumn ctermbg=17
-highlight CursorLineNR ctermfg=red
+" highlight cursorline ctermbg=17
+" highlight cursorcolumn ctermbg=17
+" highlight CursorLineNR ctermfg=red
 " }}} 
 " status line {{{
 set laststatus=2
@@ -176,18 +175,13 @@ cnoremap <C-v> vsplit ~/.vimrc<cr> " vsplit your vimrc
 nnoremap ; :
 nnoremap <F2> :!clear && %<cr>
 inoremap <F2> <C-o>:w<CR>:!clear<CR>:!%<CR>
-nnoremap <F3> :!clear && pipenv run %<cr>
-nnoremap <C-h> <C-w>h
-nnoremap <C-j> <C-w>j
-nnoremap <C-k> <C-w>k
-nnoremap <C-l> <C-w>l
+nnoremap <F3> :!clear && pipenv run %:p<cr>
 function! RunPyWithArgument(w3m)
 	let tempfile = system('cat /tmp/vimscriptargument')
 	if tempfile =~ "No such file or directory" 
 		execute "!touch /tmp/vimscriptargument"
 	endif
 	if empty(tempfile)
-		execute "!echo \"file is supposed to be empty\""
 		execute "!cat /tmp/vimscriptargument" 
 		call inputsave()
 		let response = input("Enter argument: ","prdel","file")
@@ -197,9 +191,9 @@ function! RunPyWithArgument(w3m)
 		let response = tempfile	
 	endif
 	if a:w3m == 1
-		let lol = "!clear && pipenv run % ".response." | w3m -dump -T text/html"
+		let lol = "!clear && pipenv run %:p ".response." | w3m -dump -T text/html"
 	else 
-		let lol = "!clear && pipenv run % ".response
+		let lol = "!clear && pipenv run %:p ".response
 	endif
 	execute lol 
 
@@ -217,8 +211,6 @@ nnoremap Q gg=G<C-o><C-o>
 imap <C-l> <C-o>x
 " display list of buffers and 
 
-" autosave
-autocmd! TextChanged,TextChangedI <buffer> silent write
 " autoclear before commanad
 command! -nargs=1 R :!clear && <args>
 " custom commands (invoked by typing ':' and your command
@@ -232,6 +224,29 @@ command! -range UC <line1>,<line2>normal ^x
 command! -nargs=* -complete=shellcmd RW new | setlocal buftype=nofile bufhidden=hide noswapfile | r !<args>
 
 "=====[ Highlight matches when jumping to next ]=============
+
+fun! JSONize(number)
+	let lineno = line(".") - 1
+	let indent = indent(lineno)
+	call inputsave()
+	let response = input("Attribute: \n\r")
+	call inputrestore()
+	redraw
+	if a:number == 0
+	let text = "\"".response."\""." = self.".response.",\r"
+	endif
+	if a:number == 1
+	let text = "\"".response."\""." = self.".response."\r"
+	endif
+	execute "normal! i".text
+endfun
+command! JSON call JSONize(0,) \| gg=G
+inoremap <F11> <C-r>=JSONize(0)<CR>
+
+
+
+
+
 
 " This rewires n and N to do the highlighing...
 nnoremap <silent> n   n:call HLNext(0.4)<cr>
@@ -355,19 +370,6 @@ function! Demo()
 	call setline('.', curline . ' ' . name)
 endfunction  
 
-" attempt at overriding syntax highlighting {{{
-" Two ##s will match red
-syntax match sebcomment1 /"*\s*##RED##.*/
-highlight sebcomment1 ctermbg=magenta
-
-" Three #s will match orange
-syntax match sebcomment2 /"*\s*##ORANGE##.*/
-highlight sebcomment2 ctermbg=green
-
-" Three #s will match orange
-syntax match sebcomment3 /"*\s*##CYAN##.*/
-highlight sebcomment3 ctermbg=cyan
-" }}} 
 " enable this to use vim as a man page viewer according to vim.fandom.com
 let $PAGER=''
 
@@ -489,7 +491,6 @@ command! Copy .w! /tmp/vimtoclip | !clear && cat /tmp/vimtoclip | ${HOME}/bin/se
 " open Vimrc in a new tab
 command! Tabvimrc tabedit ~/.vimrc
 
-" F3 to repeat previous command
 
 " When leaving insert mode, indent
 function! SebIndent() 
@@ -521,7 +522,6 @@ set showmode
 set diffexpr="diff -e"
 
 " diminactive
-hi ColorColumn ctermbg=0
 colorscheme gruvbox
 
 " python stuff 
@@ -533,3 +533,14 @@ autocmd FileType html setlocal shiftwidth=2 tabstop=2
 " endfu
 " autocmd bufenter *.py :call SetNoColon()
 " autocmd filetype python :call SetNoColon()
+
+
+" get current syntax highlighting group
+function! SynGroup()
+let l:s = synID(line('.'), col('.'), 1)
+echo synIDattr(l:s, 'name') . ' -> ' . synIDattr(synIDtrans(l:s), 'name')
+endfun
+
+" autosave
+autocmd! TextChanged,TextChangedI <buffer> silent write
+set term=screen-256color
