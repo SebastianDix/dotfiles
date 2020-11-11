@@ -1,4 +1,5 @@
 shopt -s expand_aliases
+alias s='screen -r -d'
 alias fixpy="export PYTHONPATH=$(find ~/.local/share/virtualenvs/ -iname "site-packages" | xargs | tr " " ":")"
 alias hetzner="ssh -F ~/.ssh/config -c aes256-ctr hetzner"
 alias vpy="cd ~/bin/VENV && activate"
@@ -59,7 +60,6 @@ alias 0='cd ..'
 alias v='vimselectfile'
 alias pus='git push 2>/dev/null &'
 alias vv='vimselectfile --quick'
-alias s='status'
 alias ug='updateGit'
 alias b='pushd ~/bin && ll'
 alias vess="/usr/share/vim/vim80/macros/less.sh"
