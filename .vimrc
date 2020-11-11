@@ -131,7 +131,7 @@ func! STL()
 	"	let stl = stl . "           "
 	" endif
 
-	let stl = "%#Search#" . $PWD . " %#StatusLine#" . stl
+	let stl =" %#StatusLine#" . stl
 	let resolvedFileName=resolve(expand("%:p"))
 	let fileDirectory=fnamemodify(resolvedFileName, ":h")
 	let gitcommand = "git -C " . fileDirectory . " status -s " . resolvedFileName
