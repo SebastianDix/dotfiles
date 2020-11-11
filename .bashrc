@@ -278,3 +278,5 @@ export BASH_ENV="${HOME}/.bash_aliases"
 if command -v pyenv 1>/dev/null 2>&1; then
   eval "$(pyenv init -)"
 fi
+export DIXCURRENTPROJECTDIR="${HOME}/bin/analysis"
+export DIXCURRENTPROJECTAPPNAME="app.py"
