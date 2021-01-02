@@ -1,92 +1,97 @@
-" Debian boilerplate info {{{ 
+" Debian boilerplate info {{{ e:wxhh
 
 
-" All system-wide defaults are set in $VIMRUNTIME/debian.vim and sourced by
-" the call to :runtime you can find below.  If you wish to change any of those
-" settings, you should do it in this file (/etc/vim/vimrc), since debian.vim
-" will be overwritten everytime an upgrade of the vim packages is performed.
-" It is recommended to make changes after sourcing debian.vim since it alters
-" the value of the 'compatible' option.
+	" All system-wide defaults are set in $VIMRUNTIME/debian.vim and sourced by
+	" the call to :runtime you can find below.  If you wish to change any of those
+	" settings, you should do it in this file (/etc/vim/vimrc), since debian.vim
+	" will be overwritten everytime an upgrade of the vim packages is performed.
+	" It is recommended to make changes after sourcing debian.vim since it alters
+	" the value of the 'compatible' option.
 
-" This line should not be removed as it ensures that various options are
-" properly set to work with the Vim-related packages available in Debian.
-runtime! debian.vim
-" }}}
-" {{{VIMRUNTIME/defaults.vim if not vimrc ...
-" Vim will load $VIMRUNTIME/defaults.vim if the user does not have a vimrc.
-" This happens after /etc/vim/vimrc(.local) are loaded, so it will override
-" any settings in these files.
-" If you don't want that to happen, uncomment the below line to prevent
-" defaults.vim from being loaded.
-" let g:skip_defaults_vim = 1
-" }}}
-" Explanation of set nocompatible {{{
-" Uncomment the next line to make Vim more Vi-compatible
-" NOTE: debian.vim sets 'nocompatible'.  Setting 'compatible' changes numerous
-" options, so any other options should be set AFTER setting 'compatible'.
-set nocompatible
-" }}}
-" {{{ explanation of syntax highlighting
-" Vim5 and later versions support syntax highlighting. 
-" Uncommenting the next
-" line enables syntax highlighting by default.
-if has("syntax")
-	syntax on
-endif
-"}}}
-" {{{ If using a dark background within the editing area and syntax highlighting
-" turn on this option as well
-set background=dark
-"}}}
-" Jump to last position on reopen {{{
-"Uncomment the following to have Vim jump to the last position when
-" reopening a file
-if has("autocmd")
-	au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
-endif " }}} 
-" Filetype-based indentation and plugins {{{
-" Uncomment the following to have Vim load indentation rules and plugins
-" according to the detected filetype.
-if has("autocmd")
-	filetype plugin indent on
-endif " }}}
-" Default options {{{
-" The following are commented out as they cause vim to behave a lot
-" differently from regular Vi. They are highly recommended though.
-set showcmd		" Show (partial) command in status line.
-set showmatch		" Show matching brackets.
-set ignorecase		" Do case insensitive matching
-set smartcase		" Do smart case matching
-set incsearch		" Incremental search
-set autowrite		" Automatically save before commands like :next and :make
-set hidden		" Hide buffers when they are abandoned
-set mouse=a		" Enable mouse usage (all modes)
-" }}}
-" Source /etc/vim/vimrc.local {{{
-" Source a global configuration file if available
-if filereadable("/etc/vim/vimrc.local")
-	source /etc/vim/vimrc.local
-endif " }}} 
-" basic preferencees (fold,color,highlight,number) {{{
-" this is the best colorscheme imo
-colorscheme desert
-" do not highlight search esults
-set nohlsearch
-" setting default fold method
-set foldmethod=marker
-" indentation
-" }}}
+	" This line should not be removed as it ensures that various options are
+	" properly set to work with the Vim-related packages available in Debian.
+	runtime! debian.vim
+	" }}}
+	" {{{VIMRUNTIME/defaults.vim if not vimrc ...
+	" Vim will load $VIMRUNTIME/defaults.vim if the user does not have a vimrc.
+	" This happens after /etc/vim/vimrc(.local) are loaded, so it will override
+	" any settings in these files.
+	" If you don't want that to happen, uncomment the below line to prevent
+	" defaults.vim from being loaded.
+	" let g:skip_defaults_vim = 1
+	" }}}
+	" Explanation of set nocompatible {{{
+	" Uncomment the next line to make Vim more Vi-compatible
+	" NOTE: debian.vim sets 'nocompatible'.  Setting 'compatible' changes numerous
+	" options, so any other options should be set AFTER setting 'compatible'.
+	set nocompatible
+	" }}}
+	" {{{ explanation of syntax highlighting
+	" Vim5 and later versions support syntax highlighting. 
+	" Uncommenting the next
+	" line enables syntax highlighting by default.
+	if has("syntax")
+		syntax on
+	endif
+	"}}}
+	" {{{ If using a dark background within the editing area and syntax highlighting
+	" turn on this option as well
+	set background=dark
+	"}}}
+	" Jump to last position on reopen {{{
+	"Uncomment the following to have Vim jump to the last position when
+	" reopening a file
+	if has("autocmd")
+		au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
+	endif " }}} 
+	" Filetype-based indentation and plugins {{{
+	" Uncomment the following to have Vim load indentation rules and plugins
+	" according to the detected filetype.
+	if has("autocmd")
+		filetype plugin indent on
+	endif " }}}
+	" Default options {{{
+	" The following are commented out as they cause vim to behave a lot
+	" differently from regular Vi. They are highly recommended though.
+	set showcmd		" Show (partial) command in status line.
+	set showmatch		" Show matching brackets.
+	set ignorecase		" Do case insensitive matching
+	set smartcase		" Do smart case matching
+	set incsearch		" Incremental search
+	set autowrite		" Automatically save before commands like :next and :make
+	set hidden		" Hide buffers when they are abandoned
+	set mouse=a		" Enable mouse usage (all modes)
+	" }}}
+	" Source /etc/vim/vimrc.local {{{
+	" Source a global configuration file if available
+	if filereadable("/etc/vim/vimrc.local")
+		source /etc/vim/vimrc.local
+	endif " }}} 
+	" basic preferencees (fold,color,highlight,number) {{{
+	" this is the best colorscheme imo
+	colorscheme desert
+	" do not highlight search esults
+	set nohlsearch
+	" setting default fold method
+	set foldmethod=marker
+	" indentation
+	" }}}
 " Plugins {{{
-call plug#begin('~/.vim/plugged')
-Plug 'chr4/nginx.vim'
-Plug 'tpope/vim-surround'
-Plug 'gioele/vim-autoswap'
-Plug 'ConradIrwin/vim-bracketed-paste'
-Plug 'blueyed/vim-diminactive'
-Plug 'morhetz/gruvbox'
-Plug 'ycm-core/YouCompleteMe'
-Plug 'hdima/python-syntax'
-call plug#end()
+set nocompatible              " be iMproved, required
+filetype off                  " required
+set rtp+=~/.vim/bundle/Vundle.vim
+call vundle#begin()
+Plugin 'VundleVim/Vundle.vim'
+Plugin 'chr4/nginx.vim'
+Plugin 'tpope/vim-surround'
+Plugin 'gioele/vim-autoswap'
+Plugin 'morhetz/gruvbox'
+Plugin 'ycm-core/YouCompleteMe'
+Plugin 'sheerun/vim-polyglot'
+Plugin 'tpope/vim-commentary'
+Plugin 'luochen1990/rainbow'
+call vundle#end()
+filetype plugin indent on    " required
 " }}}
 " Cursorline highlighting {{{
 set number
@@ -95,9 +100,9 @@ set cursorcolumn
 
 highlight LineNr ctermfg=DarkGrey
 highlight clear CursorLine " get rid of underline
-highlight cursorline ctermbg=17
-highlight cursorcolumn ctermbg=17
-highlight CursorLineNR ctermfg=red
+" highlight cursorline ctermbg=17
+" highlight cursorcolumn ctermbg=17
+" highlight CursorLineNR ctermfg=red
 " }}} 
 " status line {{{
 set laststatus=2
@@ -128,7 +133,7 @@ func! STL()
 	"	let stl = stl . "           "
 	" endif
 
-	let stl = "%#Search#" . $PWD . " %#StatusLine#" . stl
+	let stl =" %#StatusLine#" . stl
 	let resolvedFileName=resolve(expand("%:p"))
 	let fileDirectory=fnamemodify(resolvedFileName, ":h")
 	let gitcommand = "git -C " . fileDirectory . " status -s " . resolvedFileName
@@ -172,6 +177,32 @@ cnoremap <C-v> vsplit ~/.vimrc<cr> " vsplit your vimrc
 nnoremap ; :
 nnoremap <F2> :!clear && %<cr>
 inoremap <F2> <C-o>:w<CR>:!clear<CR>:!%<CR>
+nnoremap <F3> :!clear && pipenv run %:p<cr>
+function! RunPyWithArgument(w3m)
+	let tempfile = system('cat /tmp/vimscriptargument')
+	if tempfile =~ "No such file or directory" 
+		execute "!touch /tmp/vimscriptargument"
+	endif
+	if empty(tempfile)
+		execute "!cat /tmp/vimscriptargument" 
+		call inputsave()
+		let response = input("Enter argument: ","prdel","file")
+		call inputrestore()
+		silent "!echo ".response." > /tmp/vimscriptargument"
+	else
+		let response = tempfile	
+	endif
+	if a:w3m == 1
+		let lol = "!clear && pipenv run %:p ".response." | w3m -dump -T text/html"
+	else 
+		let lol = "!clear && pipenv run %:p ".response
+	endif
+	execute lol 
+
+endfunction
+
+nnoremap <F4> :call RunPyWithArgument(0)<CR>
+nnoremap <F5> :call RunPyWithArgument(1)<CR>
 nnoremap <F12> <ESC>:set paste!<CR>
 inoremap <silent> <F12> <ESC>:set paste!<CR>
 nnoremap <F9> :so ~/.vimrc<CR>
@@ -181,10 +212,7 @@ nnoremap Q gg=G<C-o><C-o>
 ":let a = getcurpos()[1] \| silent execute "normal! gg=GG" \| execute a <CR>zz
 imap <C-l> <C-o>x
 " display list of buffers and 
-nnoremap <F5> :buffers<CR>:buffer<Space>
 
-" autosave
-autocmd! TextChanged,TextChangedI <buffer> silent write
 " autoclear before commanad
 command! -nargs=1 R :!clear && <args>
 " custom commands (invoked by typing ':' and your command
@@ -194,10 +222,34 @@ command! Vimrc :vsplit ~/.vimrc
 command! -range C <line1>,<line2>normal ^i#<esc>  
 command! -range UC <line1>,<line2>normal ^x  
 
+"
 " cool way of displaying shell commands
 command! -nargs=* -complete=shellcmd RW new | setlocal buftype=nofile bufhidden=hide noswapfile | r !<args>
 
 "=====[ Highlight matches when jumping to next ]=============
+
+fun! JSONize(number)
+	let lineno = line(".") - 1
+	let indent = indent(lineno)
+	call inputsave()
+	let response = input("Attribute: \n\r")
+	call inputrestore()
+	redraw
+	if a:number == 0
+	let text = "\"".response."\""." = self.".response.",\r"
+	endif
+	if a:number == 1
+	let text = "\"".response."\""." = self.".response."\r"
+	endif
+	execute "normal! i".text
+endfun
+command! JSON call JSONize(0,) \| gg=G
+inoremap <F11> <C-r>=JSONize(0)<CR>
+
+
+
+
+
 
 " This rewires n and N to do the highlighing...
 nnoremap <silent> n   n:call HLNext(0.4)<cr>
@@ -321,19 +373,6 @@ function! Demo()
 	call setline('.', curline . ' ' . name)
 endfunction  
 
-" attempt at overriding syntax highlighting {{{
-" Two ##s will match red
-syntax match sebcomment1 /"*\s*##RED##.*/
-highlight sebcomment1 ctermbg=magenta
-
-" Three #s will match orange
-syntax match sebcomment2 /"*\s*##ORANGE##.*/
-highlight sebcomment2 ctermbg=green
-
-" Three #s will match orange
-syntax match sebcomment3 /"*\s*##CYAN##.*/
-highlight sebcomment3 ctermbg=cyan
-" }}} 
 " enable this to use vim as a man page viewer according to vim.fandom.com
 let $PAGER=''
 
@@ -455,8 +494,6 @@ command! Copy .w! /tmp/vimtoclip | !clear && cat /tmp/vimtoclip | ${HOME}/bin/se
 " open Vimrc in a new tab
 command! Tabvimrc tabedit ~/.vimrc
 
-" F3 to repeat previous command
-nnoremap <F3> :!!<CR>
 
 " When leaving insert mode, indent
 function! SebIndent() 
@@ -464,14 +501,13 @@ function! SebIndent()
 endfunction
 autocmd! InsertLeave <buffer> call SebIndent()
 
-inoremap <F5> <C-R>=ListMonths()<CR>
-let snippets=system('ls ${HOME}/.vim/snippets | xargs')
-let snippets=split(snippets)
-let constant="snip__"
-for snip in snippets
-	execute "iabbrev ".constant.snip "<C-R>=system('cat ${HOME}/.vim/snippets/".snip."')<CR>"
-endfor
-call map(snippets,"g:constant.v:val")
+" let snippets=system('ls ${HOME}/.vim/snippets | xargs')
+" let snippets=split(snippets)
+" let constant="snip__"
+" for snip in snippets
+" 	execute "iabbrev ".constant.snip "<C-R>=system('cat ${HOME}/.vim/snippets/".snip."')<CR>"
+" endfor
+" call map(snippets,"g:constant.v:val")
 
 func! ListSnippets(snippets)
 	call complete(col('.'),a:snippets)
@@ -489,7 +525,6 @@ set showmode
 set diffexpr="diff -e"
 
 " diminactive
-hi ColorColumn ctermbg=0
 colorscheme gruvbox
 
 " python stuff 
@@ -501,3 +536,16 @@ autocmd FileType html setlocal shiftwidth=2 tabstop=2
 " endfu
 " autocmd bufenter *.py :call SetNoColon()
 " autocmd filetype python :call SetNoColon()
+
+
+" get current syntax highlighting group
+function! SynGroup()
+let l:s = synID(line('.'), col('.'), 1)
+echo synIDattr(l:s, 'name') . ' -> ' . synIDattr(synIDtrans(l:s), 'name')
+endfun
+
+" autosave
+autocmd! TextChanged,TextChangedI <buffer> silent write
+set term=screen-256color
+colorscheme gruvbox
+let g:rainbow_active = 1 "set to 0 if you want to enable it later via :RainbowToggle

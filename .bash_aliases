@@ -1,10 +1,9 @@
-
 shopt -s expand_aliases
 alias sebastian="ssh -F ~/.ssh/config -c aes256-ctr sebastian"
 alias hetzner="ssh -F ~/.ssh/config -c aes256-ctr sebastian"
 alias vpy="cd ~/bin/VENV && activate"
 alias cds="showlastdirs"
-alias py="python3"
+alias py="python3.7"
 alias activate="source ./bin/activate"
 alias aliases="vim ~/.bash_aliases && source ~/.bashrc"
 alias bashrc="vim ~/.bashrc && source ~/.bashrc"
@@ -22,7 +21,7 @@ alias ralias="source ~/.bashrc"
 # some more ls aliases
 alias lll='ls -AFt1 --color | nl'
 alias la='ls -A'
-alias l='ls -CF'
+alias l='lvim'
 alias ll='ls -AFt1 --color | nl | head -15'
 # some git aliases
 alias gs='git status'
@@ -31,7 +30,7 @@ alias gaf='git add .'
 alias dotfiles='cd ~/dotfiles'
 alias gp='git push'
 alias powershellfolder='cd /mnt/c/Windows/System32/WindowsPowerShell/v1.0'
-alias bin='cd ~/bin'
+alias bin='pushd ~/bin && ll'
 alias rnginx='systemctl restart nginx.service'
 alias snginx='systemctl status nginx.service'
 alias add='git add'
@@ -60,9 +59,9 @@ alias 0='cd ..'
 alias v='vimselectfile'
 alias pus='git push 2>/dev/null &'
 alias vv='vimselectfile --quick'
-alias s='status'
 alias ug='updateGit'
 alias b='pushd ~/bin && ll'
 alias vess="/usr/share/vim/vim80/macros/less.sh"
 alias reload="systemctl reload"
 alias ig="grep -i"
+alias pym="python3 -m"

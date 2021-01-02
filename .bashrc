@@ -274,7 +274,13 @@ source ${HOME}/bin/acd_func.sh
 export PAGER="/usr/bin/less"
 export BASH_ENV="${HOME}/.bash_aliases"
 
-#pyenv 
-export PATH="/home/sebastian/.pyenv/bin:$PATH"
+#PYENVhttps://github.com/pyenv/pyenv#installation 
+if command -v pyenv 1>/dev/null 2>&1; then
+  eval "$(pyenv init -)"
+fi
+export DIXCURRENTPROJECTDIR="${HOME}/bin/analysis"
+export DIXCURRENTPROJECTAPPNAME="app.py"
+if command -v pyenv 1>/dev/null 2>&1; then
 eval "$(pyenv init -)"
 eval "$(pyenv virtualenv-init -)"
+fi

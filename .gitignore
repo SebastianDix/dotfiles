@@ -3,3 +3,4 @@
 *.swp
 .vim/plugged*
 .vim/sessions*
+.vim/bundle*
