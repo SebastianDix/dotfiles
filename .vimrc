@@ -88,6 +88,8 @@ Plugin 'gioele/vim-autoswap'
 Plugin 'morhetz/gruvbox'
 Plugin 'ycm-core/YouCompleteMe'
 Plugin 'sheerun/vim-polyglot'
+Plugin 'tpope/vim-commentary'
+Plugin 'luochen1990/rainbow'
 call vundle#end()
 filetype plugin indent on    " required
 " }}}
@@ -220,6 +222,7 @@ command! Vimrc :vsplit ~/.vimrc
 command! -range C <line1>,<line2>normal ^i#<esc>  
 command! -range UC <line1>,<line2>normal ^x  
 
+"
 " cool way of displaying shell commands
 command! -nargs=* -complete=shellcmd RW new | setlocal buftype=nofile bufhidden=hide noswapfile | r !<args>
 
@@ -544,3 +547,5 @@ endfun
 " autosave
 autocmd! TextChanged,TextChangedI <buffer> silent write
 set term=screen-256color
+colorscheme gruvbox
+let g:rainbow_active = 1 "set to 0 if you want to enable it later via :RainbowToggle

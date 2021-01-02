@@ -1,0 +1,22 @@
+# dirname = '/[^\/]+(?=/)|'
+dirname = '(?<=\s\/).*?(?=\/)|(?<=^~\/).*?(?=\/)'
+basename = '(?<=\/)[^\/]*$|(?<=\/)[^\/]+?(?=\s)'
+tilde = "~"
+
+boilerplate = "{{{" 
+filename = "
+
+comment delim '^([[:space:]]*\'{3})' '(\'{3})' multiline 
+comment delim '^([[:space:]]*\"{3})' '(\"{3})' multiline 
+
+comment = '^([[:space:]]*\'(?:[^\\\']|\\.)*\'[[:space:]]*|[[:space:]]*\"(?:[^\\\"]|\\.)*\"[[:space:]]*)$'
+
+string delim '([[:space:]]*\'{3})' '(\'{3})' multiline 
+string delim '([[:space:]]*\"{3})' '(\"{3})' multiline 
+
+string delim "\"" "\"" escape "\\" 
+string delim "'" "'"  escape "\\" 
+
+symbol = "{|}"
+
+bubak = "}}}"
