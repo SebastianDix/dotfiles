@@ -1,6 +1,7 @@
 
 shopt -s expand_aliases
-alias hetzner="ssh -F ~/.ssh/config -c aes256-ctr hetzner"
+alias sebastian="ssh -F ~/.ssh/config -c aes256-ctr sebastian"
+alias hetzner="ssh -F ~/.ssh/config -c aes256-ctr sebastian"
 alias vpy="cd ~/bin/VENV && activate"
 alias cds="showlastdirs"
 alias py="python3"

@@ -274,4 +274,7 @@ source ${HOME}/bin/acd_func.sh
 export PAGER="/usr/bin/less"
 export BASH_ENV="${HOME}/.bash_aliases"
 
-export PYTHONPATH="/usr/local/lib/python3.6/dist-packages/"
+#pyenv 
+export PATH="/home/sebastian/.pyenv/bin:$PATH"
+eval "$(pyenv init -)"
+eval "$(pyenv virtualenv-init -)"
