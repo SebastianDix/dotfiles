@@ -548,4 +548,5 @@ endfun
 autocmd! TextChanged,TextChangedI <buffer> silent write
 set term=screen-256color
 colorscheme gruvbox
+autocmd BufNewFile,BufRead *.html set filetype=html
 let g:rainbow_active = 1 "set to 0 if you want to enable it later via :RainbowToggle

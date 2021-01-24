@@ -28,13 +28,7 @@ elif [ "$SSH_AUTH_SOCK" ] && [ $agent_run_state = 1 ]; then
 fi
 
 unset env
-for file in ${HOME}/bin/*; do
-	if [[ -d $file && $(basename $file) =~ ^[[:alnum:]] ]];then
-		export PATH="$PATH:$file"
-	fi
-done
+
 export PYENV_ROOT="$HOME/.pyenv"
 export PATH="$PYENV_ROOT/bin:$PATH"
-
 export PATH="$HOME/.poetry/bin:$PATH"
-screen -r
