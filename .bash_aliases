@@ -1,4 +1,6 @@
 shopt -s expand_aliases
+alias s="pushd ~/scripts"
+alias a="pushd ~/scripts/analysis"
 alias sebastian="ssh -F ~/.ssh/config -c aes256-ctr sebastian"
 alias hetzner="ssh -F ~/.ssh/config -c aes256-ctr sebastian"
 alias vpy="cd ~/bin/VENV && activate"

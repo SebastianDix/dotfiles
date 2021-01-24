@@ -107,6 +107,7 @@ EDITOR=vim
 
 # add bin  folder to path variable
 export PATH="$PATH:${HOME}/bin/"
+export PATH="$PATH:${HOME}/scripts/"
 
 if [ -f ~/.bash_prompt ]; then
 	. ~/.bash_prompt
@@ -277,7 +278,6 @@ export BASH_ENV="${HOME}/.bash_aliases"
 #PYENVhttps://github.com/pyenv/pyenv#installation 
 export DIXCURRENTPROJECTDIR="${HOME}/bin/analysis"
 export DIXCURRENTPROJECTAPPNAME="app.py"
-if command -v pyenv 1>/dev/null 2>&1; then
 eval "$(pyenv init -)"
 eval "$(pyenv virtualenv-init -)"
-fi
+export hetznerip="159.69.156.52"

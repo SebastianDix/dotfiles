@@ -1,6 +1,7 @@
 .vim/.netrwhist
 .vim/undodir
 *.swp
+*.swo
 .vim/plugged*
 .vim/sessions*
 .vim/bundle*
