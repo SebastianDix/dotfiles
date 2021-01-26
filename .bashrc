@@ -107,6 +107,7 @@ EDITOR=vim
 
 # add bin  folder to path variable
 export PATH="$PATH:${HOME}/bin/"
+export PATH="$PATH:${HOME}/.local/bin/"
 export PATH="$PATH:${HOME}/scripts/"
 
 if [ -f ~/.bash_prompt ]; then
