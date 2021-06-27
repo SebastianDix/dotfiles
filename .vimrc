@@ -530,7 +530,7 @@ colorscheme gruvbox
 
 " python stuff 
 
-autocmd FileType html setlocal shiftwidth=2 tabstop=2
+"autocmd FileType html setlocal shiftwidth=2 tabstop=2
 " fun! SetNoColon()
 " syn match noColon /\s*if.*[^:]$/
 " highlight noColon ctermbg=red 
@@ -551,3 +551,7 @@ set term=screen-256color
 colorscheme gruvbox
 autocmd BufNewFile,BufRead *.html set filetype=html
 let g:rainbow_active = 1 "set to 0 if you want to enable it later via :RainbowToggle
+
+nnoremap ,t i</<C-x><C-o><Esc>
+inoremap <C-t> </<C-x><C-o><Esc>
+inoremap <C-j> <Esc>
