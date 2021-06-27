@@ -90,6 +90,7 @@ Plugin 'ycm-core/YouCompleteMe'
 Plugin 'sheerun/vim-polyglot'
 Plugin 'tpope/vim-commentary'
 Plugin 'luochen1990/rainbow'
+Plugin 'ternjs/tern_for_vim'
 call vundle#end()
 filetype plugin indent on    " required
 " }}}
@@ -175,6 +176,17 @@ inoremap <Tab> <C-R>=CleverTab()<CR>
 " remaps
 cnoremap <C-v> vsplit ~/.vimrc<cr> " vsplit your vimrc
 nnoremap ; :
+
+function! Run()
+let shebang = getline(1)
+	if shebang[0] == "#" && shebang[1] == "!" 
+		execute "!clear && ".getline(1)[2:]." ".expand('%:p')." | less -SFM"
+	else
+		:!clear && % | less -SFM <CR>
+	endif
+endfunction
+nnoremap <F2> :call Run() <CR>
+nnoremap <F4> :execute ":vert term ".getline(1)[2:]." ".expand('%:p')<CR>
 nnoremap <F2> :!clear && %<cr>
 inoremap <F2> <C-o>:w<CR>:!clear<CR>:!%<CR>
 nnoremap <F6> <C-o>:w<CR>:!clear<CR>:!bash %<CR>
@@ -202,9 +214,8 @@ function! RunPyWithArgument(w3m)
 
 endfunction
 
+nnoremap <F12> <ESC>:set paste!<CR>
 
-nnoremap <F4> :call RunPyWithArgument(0)<CR>
-nnoremap <F5> :call RunPyWithArgument(1)<CR>
 inoremap <silent> <F12> <ESC>:set paste!<CR>
 nnoremap <F9> :so ~/.vimrc<CR>
 nnoremap <F8> :!git add %<CR>
@@ -555,3 +566,4 @@ let g:rainbow_active = 1 "set to 0 if you want to enable it later via :RainbowTo
 nnoremap ,t i</<C-x><C-o><Esc>
 inoremap <C-t> </<C-x><C-o><Esc>
 inoremap <C-j> <Esc>
+nnoremap <S-q> :qall!<CR>

@@ -5,4 +5,5 @@
 .vim/plugged*
 .vim/sessions*
 .vim/bundle*
+.vim/bundle/*
 pycache

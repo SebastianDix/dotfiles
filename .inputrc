@@ -2,4 +2,3 @@ set colored-stats on
 set completion-display-width 100000
 set bind-tty-special-chars off 
 set print-completions-horizontally on
-
