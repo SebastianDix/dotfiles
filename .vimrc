@@ -90,6 +90,7 @@ Plugin 'ycm-core/YouCompleteMe'
 Plugin 'sheerun/vim-polyglot'
 Plugin 'tpope/vim-commentary'
 Plugin 'luochen1990/rainbow'
+Plugin 'ternjs/tern_for_vim'
 call vundle#end()
 filetype plugin indent on    " required
 " }}}
@@ -175,8 +176,17 @@ inoremap <Tab> <C-R>=CleverTab()<CR>
 " remaps
 cnoremap <C-v> vsplit ~/.vimrc<cr> " vsplit your vimrc
 nnoremap ; :
-nnoremap <F2> :!clear && %<cr>
-inoremap <F2> <C-o>:w<CR>:!clear<CR>:!%<CR>
+
+function! Run()
+let shebang = getline(1)
+	if shebang[0] == "#" && shebang[1] == "!" 
+		execute "!clear && ".getline(1)[2:]." ".expand('%:p')." | less -SFM"
+	else
+		:!clear && % | less -SFM <CR>
+	endif
+endfunction
+nnoremap <F2> :call Run() <CR>
+nnoremap <F4> :execute ":vert term ".getline(1)[2:]." ".expand('%:p')<CR>
 nnoremap <F3> :!clear && pipenv run %:p<cr>
 function! RunPyWithArgument(w3m)
 	let tempfile = system('cat /tmp/vimscriptargument')
@@ -201,8 +211,6 @@ function! RunPyWithArgument(w3m)
 
 endfunction
 
-nnoremap <F4> :call RunPyWithArgument(0)<CR>
-nnoremap <F5> :call RunPyWithArgument(1)<CR>
 nnoremap <F12> <ESC>:set paste!<CR>
 inoremap <silent> <F12> <ESC>:set paste!<CR>
 nnoremap <F9> :so ~/.vimrc<CR>
@@ -550,3 +558,5 @@ set term=screen-256color
 colorscheme gruvbox
 autocmd BufNewFile,BufRead *.html set filetype=html
 let g:rainbow_active = 1 "set to 0 if you want to enable it later via :RainbowToggle
+
+nnoremap <S-q> :qall!<CR>

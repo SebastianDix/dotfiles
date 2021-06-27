@@ -185,7 +185,7 @@ echo `ssh-add -l | wc -l` SSH keys registered.
 unset env
 
 export HISTSIZE=1000000;
-PROMPT_COMMAND='history -a;jobcount=$(jobs | wc -l);if [[ $jobcount -eq 0 ]]; then jobprompt=""; else jobprompt=$jobcount; fi'
+PROMPT_COMMAND='pwd >> /tmp/dirsvisited; history -a;jobcount=$(jobs | wc -l);if [[ $jobcount -eq 0 ]]; then jobprompt=""; else jobprompt=$jobcount; fi'
 shopt -s cmdhist
 export HOME=${HOME}
 export PATH=$PATH:~/bin:~/bin/VENV
@@ -273,12 +273,14 @@ export -f ebcyan
 # cool cd -- function
 source ${HOME}/bin/acd_func.sh
 # PAGER to vim
-export PAGER="/usr/bin/less"
+export PAGER="/usr/bin/less -SFMJiR"
 export BASH_ENV="${HOME}/.bash_aliases"
 
 #PYENVhttps://github.com/pyenv/pyenv#installation 
-export DIXCURRENTPROJECTDIR="${HOME}/bin/analysis"
+export DIXCURRENTPROJECTDIR="${HOME}/bin/cryptobot"
 export DIXCURRENTPROJECTAPPNAME="app.py"
 eval "$(pyenv init -)"
 eval "$(pyenv virtualenv-init -)"
 export hetznerip="159.69.156.52"
+source ${HOME}/.credentials
+#source ~/.local/share/blesh/ble.sh
