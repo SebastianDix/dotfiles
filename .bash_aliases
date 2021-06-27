@@ -1,4 +1,5 @@
 shopt -s expand_aliases
+alias Bind="bind"
 alias s="pushd ~/scripts"
 alias a="pushd ~/scripts/analysis"
 alias sebastian="ssh -F ~/.ssh/config -c aes256-ctr sebastian"
