@@ -127,62 +127,62 @@ fi
 if [ -f ~/.dir_colors ]; then
 	. ~/.dir_colors
 fi
-env=~/.ssh/agent.env
+#env=~/.ssh/agent.env
 
-# Note: Don't bother checking SSH_AGENT_PID. It's not used
-#       by SSH itself, and it might even be incorrect
-#       (for example, when using agent-forwarding over SSH).
+## Note: Don't bother checking SSH_AGENT_PID. It's not used
+##       by SSH itself, and it might even be incorrect
+##       (for example, when using agent-forwarding over SSH).
 
-agent_is_running() {
-	if [ "$SSH_AUTH_SOCK" ]; then
-		# ssh-add returns:
-		#   0 = agent running, has keys
-		#   1 = agent running, no keys
-		#   2 = agent not running
-		ssh-add -l >/dev/null 2>&1 || [ $? -eq 1 ]
-	else
-		false
-	fi
-}
-
-agent_has_keys() {
-	ssh-add -l >/dev/null 2>&1
-}
-
-agent_load_env() {
-	. "$env" >/dev/null
-}
-
-agent_start() {
-	(umask 077; ssh-agent >"$env")
-	. "$env" >/dev/null
-}
-
-#add_all_keys() {
-#  ls ~/.ssh | grep ^id_rsa.*$ | sed "s:^:`echo ~`/.ssh/:" | xargs -n 1 ssh-add
+#agent_is_running() {
+#	if [ "$SSH_AUTH_SOCK" ]; then
+#		# ssh-add returns:
+#		#   0 = agent running, has keys
+#		#   1 = agent running, no keys
+#		#   2 = agent not running
+#		ssh-add -l >/dev/null 2>&1 || [ $? -eq 1 ]
+#	else
+#		false
+#	fi
 #}
 
-if ! agent_is_running; then
-	agent_load_env
-fi
+#agent_has_keys() {
+#	ssh-add -l >/dev/null 2>&1
+#}
 
-add_all_priv_keys() {
-	for i in ${HOME}/.ssh/*; do
-		if [[ $(basename ${i}) =~ ^id_.* ]] && [[ ! $(basename ${i}) =~ .*\.pub$ ]]; then
-			ssh-add "${i}"
-		fi
-	done
-}
-# if your keys are not stored in ~/.ssh/id_rsa.pub or ~/.ssh/id_dsa.pub, you'll need
-# to paste the proper path after ssh-add
-if ! agent_is_running; then
-	agent_start
-	add_all_priv_keys
-elif ! agent_has_keys; then
-add_all_priv_keys
-fi
-echo `ssh-add -l | wc -l` SSH keys registered.
-unset env
+#agent_load_env() {
+#	. "$env" >/dev/null
+#}
+
+#agent_start() {
+#	(umask 077; ssh-agent >"$env")
+#	. "$env" >/dev/null
+#}
+
+##add_all_keys() {
+##  ls ~/.ssh | grep ^id_rsa.*$ | sed "s:^:`echo ~`/.ssh/:" | xargs -n 1 ssh-add
+##}
+
+#if ! agent_is_running; then
+#	agent_load_env
+#fi
+
+#add_all_priv_keys() {
+#	for i in ${HOME}/.ssh/*; do
+#		if [[ $(basename ${i}) =~ ^id_.* ]] && [[ ! $(basename ${i}) =~ .*\.pub$ ]]; then
+#			ssh-add "${i}"
+#		fi
+#	done
+#}
+## if your keys are not stored in ~/.ssh/id_rsa.pub or ~/.ssh/id_dsa.pub, you'll need
+## to paste the proper path after ssh-add
+#if ! agent_is_running; then
+#	agent_start
+#	add_all_priv_keys
+#elif ! agent_has_keys; then
+#add_all_priv_keys
+#fi
+#echo `ssh-add -l | wc -l` SSH keys registered.
+#unset env
 
 export HISTSIZE=1000000;
 PROMPT_COMMAND='pwd >> /tmp/dirsvisited; history -a;jobcount=$(jobs | wc -l);if [[ $jobcount -eq 0 ]]; then jobprompt=""; else jobprompt=$jobcount; fi'
