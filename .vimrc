@@ -176,7 +176,6 @@ inoremap <Tab> <C-R>=CleverTab()<CR>
 " remaps
 cnoremap <C-v> vsplit ~/.vimrc<cr> " vsplit your vimrc
 nnoremap ; :
-<<<<<<< HEAD
 
 function! Run()
 let shebang = getline(1)
@@ -215,13 +214,8 @@ function! RunPyWithArgument(w3m)
 
 endfunction
 
-<<<<<<< HEAD
 nnoremap <F12> <ESC>:set paste!<CR>
-=======
 
-nnoremap <F4> :call RunPyWithArgument(0)<CR>
-nnoremap <F5> :call RunPyWithArgument(1)<CR>
->>>>>>> 728af1986ee2a190827ba055f0bbf3de7a9db468
 inoremap <silent> <F12> <ESC>:set paste!<CR>
 nnoremap <F9> :so ~/.vimrc<CR>
 nnoremap <F8> :!git add %<CR>
