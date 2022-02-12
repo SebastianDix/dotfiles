@@ -271,7 +271,7 @@ export -f ebcyan
 #}}}
 
 # cool cd -- function
-source ${HOME}/bin/acd_func.sh
+# source ${HOME}/bin/acd_func.sh
 # PAGER to vim
 export PAGER="/usr/bin/less -SFMJiR"
 export BASH_ENV="${HOME}/.bash_aliases"
@@ -284,3 +284,5 @@ eval "$(pyenv virtualenv-init -)"
 export hetznerip="159.69.156.52"
 source ${HOME}/.credentials
 #source ~/.local/share/blesh/ble.sh
+
+[ -f ~/.fzf.bash ] && source ~/.fzf.bash
